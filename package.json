@@ -7,12 +7,17 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "NODE_OPTIONS=--openssl-legacy-provider expo start --web",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "env:dev": "node scripts/set-environment.js development",
+    "env:stage": "node scripts/set-environment.js staging",
+    "env:prod": "node scripts/set-environment.js production"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
     "@react-navigation/native": "^6.1.5",
     "@react-navigation/native-stack": "^6.9.11",
+    "@tanstack/query-core": "^4.24.10",
+    "@tanstack/react-query": "^4.24.10",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
     "expo": "~47.0.12",
@@ -32,7 +37,9 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "patch-package": "^6.5.1",
-    "postinstall-postinstall": "^2.1.0"
+    "postinstall-postinstall": "^2.1.0",
+    "react-native-flipper": "^0.182.0",
+    "react-query-native-devtools": "^4.0.0"
   },
   "private": true
 }

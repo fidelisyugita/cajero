@@ -1,10 +1,10 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-import * as resources from './Resources';
+import * as resources from "./resources";
 
 i18n.use(initReactI18next).init({
-  compatibilityJSON: 'v4',
+  compatibilityJSON: "v4",
   returnNull: false,
   react: {
     useSuspense: false,
@@ -20,8 +20,8 @@ i18n.use(initReactI18next).init({
       {}
     ),
   },
-  lng: 'en',
-  fallbackLng: 'en',
+  lng: "en",
+  fallbackLng: "en",
 });
 
 export default i18n;

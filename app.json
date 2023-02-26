@@ -29,5 +29,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
+  },
+  "environments": {
+    "development": {
+      "API_URL": "https://api.carejo-dev.com",
+      "ENV": "development",
+      "HEADER_AUTH": "dijero",
+      "WEB_URL": "https://www.carejo-dev.com"
+    },
+    "production": {
+      "API_URL": "https://api.cajero.com",
+      "ENV": "production",
+      "HEADER_AUTH": "dijero",
+      "WEB_URL": "https://www.cajero.com"
+    }
   }
 }
