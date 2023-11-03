@@ -19,11 +19,13 @@ import {setupListeners} from '@reduxjs/toolkit/query';
 import {api} from '../services/api';
 import common from './commonStore';
 import menu, {initialMenuState} from './menuStore';
+import refund from './refundStore';
 import session, {initialSessionState} from './sessionStore';
 
 const reducers = combineReducers({
   common,
   menu,
+  refund,
   session,
   [api.reducerPath]: api.reducer,
 });

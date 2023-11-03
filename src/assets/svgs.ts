@@ -7,6 +7,8 @@ import IcCalculator from '../../assets/svgs/IcCalculator.svg';
 import IcCalculatorActive from '../../assets/svgs/IcCalculatorActive.svg';
 import IcCalendar from '../../assets/svgs/IcCalendar.svg';
 import IcCaretDown from '../../assets/svgs/IcCaretDown.svg';
+import IcCheckbox from '../../assets/svgs/IcCheckbox.svg';
+import IcCheckboxOutline from '../../assets/svgs/IcCheckboxOutline.svg';
 import IcEdit from '../../assets/svgs/IcEdit.svg';
 import IcExpense from '../../assets/svgs/IcExpense.svg';
 import IcExpenseActive from '../../assets/svgs/IcExpenseActive.svg';
@@ -28,6 +30,7 @@ import IcSignOut from '../../assets/svgs/IcSignOut.svg';
 import IcStock from '../../assets/svgs/IcStock.svg';
 import IcTable from '../../assets/svgs/IcTable.svg';
 import IcUser from '../../assets/svgs/IcUser.svg';
+import IcX from '../../assets/svgs/IcX.svg';
 import Logo from '../../assets/svgs/Logo.svg';
 
 export {
@@ -40,6 +43,8 @@ export {
   IcCalculatorActive,
   IcCalendar,
   IcCaretDown,
+  IcCheckbox,
+  IcCheckboxOutline,
   IcEdit,
   IcExpense,
   IcExpenseActive,
@@ -61,5 +66,6 @@ export {
   IcStock,
   IcTable,
   IcUser,
+  IcX,
   Logo,
 };

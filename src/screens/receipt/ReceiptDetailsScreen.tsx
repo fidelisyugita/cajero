@@ -2,6 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
 import {Surface} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import {IcPrint, IcRefund} from '../../assets/svgs';
 import Button from '../../components/Button';
@@ -9,14 +10,20 @@ import DashedLine from '../../components/DashedLine';
 import Spacer from '../../components/Spacer';
 import StatusCard from '../../components/StatusCard';
 import Text from '../../components/Text';
+import {setRefundPopupVisible} from '../../store/refundStore';
 import {colors, globalStyles} from '../../styles';
 import {s, vs} from '../../utils/scale';
 import ReceiptDetailsOrderList from './components/ReceiptDetailsOrderList';
+import RefundPopup from './components/RefundPopup';
 
 function ReceiptDetailsScreen(): JSX.Element {
   const {t} = useTranslation();
+
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
+      <RefundPopup />
       <View style={globalStyles.rowBetween}>
         <Text textStyle="heading3">Transaction No. 201023-0007</Text>
         <StatusCard status="completed" />
@@ -120,7 +127,8 @@ function ReceiptDetailsScreen(): JSX.Element {
               height={s(20)}
               width={s(20)}
             />
-          }>
+          }
+          onPress={() => dispatch(setRefundPopupVisible(true))}>
           {t('Refund')}
         </Button>
         <Button
