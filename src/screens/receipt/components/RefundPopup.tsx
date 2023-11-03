@@ -17,6 +17,7 @@ import {
   setRefundPopupVisible,
 } from '../../../store/refundStore';
 import {globalStyles} from '../../../styles';
+import {currencyPrice} from '../../../utils/convert';
 import {s, vs} from '../../../utils/scale';
 import {orderList} from '../Receipt.dummy';
 
@@ -62,25 +63,76 @@ function SelectOrderItem({item}: SelectOrderItemProps) {
   );
 }
 
+export function calculateRefundAmount(
+  list: OrderItemProps['item'][],
+  idsToMatch: number[],
+) {
+  return list.reduce((totalPrice, order) => {
+    if (idsToMatch.includes(order.id)) {
+      const orderPrice = order.variant.reduce(
+        (acc, variant) => acc + variant.price,
+        order.price,
+      );
+      totalPrice +=
+        (orderPrice - (orderPrice * order.discount) / 100) * order.qty;
+    }
+    return totalPrice;
+  }, 0);
+}
+
+const selectRefundAountAndActive = (state: RootStateProps) => {
+  const selectedRefundItems = state.refund.selectedRefundItems;
+
+  return {
+    active: selectedRefundItems.length > 0,
+    refundAmount: calculateRefundAmount(orderList, selectedRefundItems),
+  };
+};
+
+function Footer(): JSX.Element {
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const {active, refundAmount} = useSelector(
+    (state: RootStateProps) => selectRefundAountAndActive(state),
+    shallowEqual,
+  );
+
+  const onCancel = () => {
+    dispatch(setRefundPopupVisible(false));
+    dispatch(selectAllRefundItems([]));
+  };
+
+  return (
+    <Popup.Footer style={styles.footer}>
+      <Button
+        containerStyle={globalStyles.flex}
+        disabled={!active}
+        size="medium"
+        variant="secondary"
+        onPress={onCancel}>
+        {t('Cancel')}
+      </Button>
+      <Button
+        containerStyle={globalStyles.flex}
+        disabled={!active}
+        size="medium"
+        variant="primary">
+        {t('Refund')} {`${active ? currencyPrice(refundAmount) : ''}`}
+      </Button>
+    </Popup.Footer>
+  );
+}
+
 function RefundPopup(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const {active, refundPopupVisible} = useSelector(
-    (state: RootStateProps) => ({
-      active: state.refund.selectedRefundItems.length > 0,
-      refundPopupVisible: state.refund.popupVisible,
-    }),
-    shallowEqual,
+  const refundPopupVisible = useSelector(
+    (state: RootStateProps) => state.refund.popupVisible,
   );
 
   const onClose = () => {
     dispatch(setRefundPopupVisible(false));
-  };
-
-  const onCancel = () => {
-    onClose();
-    dispatch(selectAllRefundItems([]));
   };
 
   return (
@@ -104,23 +156,7 @@ function RefundPopup(): JSX.Element {
           />
         </View>
       </Popup.Body>
-      <Popup.Footer style={styles.footer}>
-        <Button
-          containerStyle={globalStyles.flex}
-          disabled={!active}
-          size="medium"
-          variant="secondary"
-          onPress={onCancel}>
-          {t('Cancel')}
-        </Button>
-        <Button
-          containerStyle={globalStyles.flex}
-          disabled={!active}
-          size="medium"
-          variant="primary">
-          {t('Refund')}
-        </Button>
-      </Popup.Footer>
+      <Footer />
     </Popup>
   );
 }
