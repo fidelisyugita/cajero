@@ -1,0 +1,19 @@
+{
+  "Sign In": "Masuk",
+  "Sign Up": "Daftar",
+  "Owner": "Pemilik",
+  "Staff": "Staf",
+  "Email": "Alamat Email",
+  "Password": "Kata Sandi",
+  "Forgot Password?": "Lupa Kata Sandi?",
+  "Sign In with Google": "Masuk dengan Google",
+  "Or": "Atau",
+  "Owner Email": "Email Pemilik",
+  "Email is a required field": "Alamat Email harus diisi",
+  "Email must be a valid email": "Alamat Email must be valid email",
+  "Owner Email is a required field": "Owner Email harus diisi",
+  "Password is a required field": "Kata Sandi harus diisi",
+  "Password must be at least 8 characters": "Kata Sandi minimal 8 karakter",
+  "Welcome to Your Point of Sale!": "Selamat datang\ndi Sistem Kasir Anda!",
+  "Welcome POS Description": "Aplikasi Kasir terbaik untuk bisnis Anda. Mudah digunakan dan cepat.\nTidak perlu registrasi rumit - kami percaya pada kesederhanaan\ndan kecepatan. Ayo mulai berjualan!"
+}
