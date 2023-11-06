@@ -106,6 +106,7 @@ function Header(): JSX.Element {
         keyExtractor={item => item.id}
         numColumns={columns}
         renderItem={({item}) => <MHeaderCell item={item} />}
+        scrollEnabled={false}
         // eslint-disable-next-line react/no-unstable-nested-components
         CellRendererComponent={props => {
           const cellStyle = getCellStyle({
@@ -137,6 +138,7 @@ function Row({data}: RowProps): JSX.Element {
         estimatedItemSize={s(80)}
         keyExtractor={item => item}
         numColumns={headers?.length}
+        scrollEnabled={false}
         // eslint-disable-next-line react/no-unstable-nested-components
         CellRendererComponent={props => {
           const cellStyle = getCellStyle({

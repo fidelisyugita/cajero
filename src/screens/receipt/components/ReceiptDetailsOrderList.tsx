@@ -53,6 +53,7 @@ function ReceiptDetailsOrderList(): JSX.Element {
         ListHeaderComponent={OrderHeader}
         contentContainerStyle={styles.content}
         data={orderList}
+        estimatedItemSize={s(66)}
         keyExtractor={item => String(item.id)}
         renderItem={({item}) => <OrderItem item={item} />}
       />
@@ -67,10 +68,9 @@ const styles = StyleSheet.create({
     borderRadius: s(8),
     borderWidth: 1,
     flex: 1,
-    minHeight: s(500),
+    height: s(500),
   },
   content: {
-    minHeight: s(500),
     padding: s(24),
   },
   orderHeaderWrapper: {

@@ -1,0 +1,62 @@
+diff --git a/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx b/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx
+index 01c0168..b14b808 100644
+--- a/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx
++++ b/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx
+@@ -88,6 +88,7 @@ const DropdownComponent: <T>(
+       accessibilityLabel,
+       itemAccessibilityLabelField,
+       mode = 'default',
++      TouchElement = TouchableWithoutFeedback,
+     } = props;
+ 
+     const ref = useRef<View>(null);
+@@ -98,6 +99,7 @@ const DropdownComponent: <T>(
+     const [position, setPosition] = useState<any>();
+     const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+     const [searchText, setSearchText] = useState('');
++    const Touch = TouchElement;
+ 
+     const { width: W, height: H } = Dimensions.get('window');
+     const styleContainerVertical: ViewStyle = useMemo(() => {
+@@ -407,7 +409,7 @@ const DropdownComponent: <T>(
+         const selected = _.isEqual(_.get(item, valueField), isSelected);
+         _.assign(item, { _index: index });
+         return (
+-          <TouchableHighlight
++          <Touch
+             key={index.toString()}
+             testID={_.get(item, itemTestIDField || labelField)}
+             accessible={!!accessibilityLabel}
+@@ -415,7 +417,7 @@ const DropdownComponent: <T>(
+               item,
+               itemAccessibilityLabelField || labelField
+             )}
+-            underlayColor={activeColor}
++            // underlayColor={activeColor}
+             onPress={() => onSelect(item)}
+           >
+             <View
+@@ -442,7 +444,7 @@ const DropdownComponent: <T>(
+                 </View>
+               )}
+             </View>
+-          </TouchableHighlight>
++          </Touch>
+         );
+       },
+       [
+diff --git a/node_modules/react-native-element-dropdown/src/components/Dropdown/model.ts b/node_modules/react-native-element-dropdown/src/components/Dropdown/model.ts
+index 378c617..5d0b9a4 100644
+--- a/node_modules/react-native-element-dropdown/src/components/Dropdown/model.ts
++++ b/node_modules/react-native-element-dropdown/src/components/Dropdown/model.ts
+@@ -1,3 +1,4 @@
++import { ElementType } from 'react';
+ import type {
+   StyleProp,
+   TextStyle,
+@@ -66,4 +67,5 @@ export interface DropdownProps<T> {
+   searchQuery?: (keyword: string, labelValue: string) => boolean;
+   onChangeText?: (search: string) => void;
+   onConfirmSelectItem?: (item: T) => void;
++  TouchElement?: ElementType;
+ }

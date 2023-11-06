@@ -2,9 +2,15 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
 
-import {IcCalendar, IcFilter, IcMagnify} from '../../../assets/svgs';
+import {
+  IcArrowDown,
+  IcArrowUp,
+  IcCalendar,
+  IcFilter,
+  IcMagnify,
+} from '../../../assets/svgs';
 import ButtonInput from '../../../components/ButtonInput';
-import Dropdown from '../../../components/Dropdown';
+import Dropdown from '../../../components/Dropdown.2';
 import InputField2 from '../../../components/InputField.2';
 import SideTabHeader from '../../../components/SideTabHeader';
 import {colors} from '../../../styles';
@@ -20,9 +26,10 @@ const filters = [
 function ReceiptHeader(): JSX.Element {
   const {t} = useTranslation();
 
-  const iconFilter = () => (
-    <IcFilter color={colors.neutral.c600} height={s(20)} width={s(20)} />
-  );
+  const iconFilter = (visible: boolean | undefined) => {
+    const Icon = visible ? IcArrowUp : IcArrowDown;
+    return <Icon color={colors.neutral.c600} height={s(20)} width={s(20)} />;
+  };
 
   return (
     <SideTabHeader
@@ -41,12 +48,11 @@ function ReceiptHeader(): JSX.Element {
             }
           />
           <Dropdown
-            ArrowDownIconComponent={iconFilter}
-            ArrowUpIconComponent={iconFilter}
-            items={filters}
+            data={filters}
             placeholder={t('All')}
+            renderRightIcon={iconFilter}
             size="medium"
-            width={vs(150)}
+            width={s(151)}
           />
           <ButtonInput
             label="20/09/2023 - 20/10/2023"

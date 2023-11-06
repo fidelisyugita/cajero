@@ -1,6 +1,8 @@
 import IcArrowCircleRight from '../../assets/svgs/IcArrowCircleRight.svg';
 import IcArrowCycle from '../../assets/svgs/IcArrowCycle.svg';
+import IcArrowDown from '../../assets/svgs/IcArrowDown.svg';
 import IcArrowLeft from '../../assets/svgs/IcArrowLeft.svg';
+import IcArrowUp from '../../assets/svgs/IcArrowUp.svg';
 import IcBusiness from '../../assets/svgs/IcBusiness.svg';
 import IcBusinessActive from '../../assets/svgs/IcBusinessActive.svg';
 import IcCalculator from '../../assets/svgs/IcCalculator.svg';
@@ -36,7 +38,9 @@ import Logo from '../../assets/svgs/Logo.svg';
 export {
   IcArrowCircleRight,
   IcArrowCycle,
+  IcArrowDown,
   IcArrowLeft,
+  IcArrowUp,
   IcBusiness,
   IcBusinessActive,
   IcCalculator,

@@ -132,6 +132,26 @@ const datas: ReceiptProps[] = [
     totalPrice: 42000,
     trxNumber: '201023-0014',
   },
+  {
+    action: 'See Details',
+    customerName: 'Annette Black',
+    id: 11,
+    paymentMethod: 'Cash',
+    status: 'Completed',
+    time: '15.04\nFri, 20 Oct 2023',
+    totalPrice: 42000,
+    trxNumber: '201023-0014',
+  },
+  {
+    action: 'See Details',
+    customerName: 'Annette Black',
+    id: 12,
+    paymentMethod: 'Cash',
+    status: 'Completed',
+    time: '15.04\nFri, 20 Oct 2023',
+    totalPrice: 42000,
+    trxNumber: '201023-0014',
+  },
 ];
 
 function ReceiptScreen(): JSX.Element {
