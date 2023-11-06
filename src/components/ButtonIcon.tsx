@@ -157,10 +157,10 @@ function ButtonIcon({
   variant = 'primary',
   ...rest
 }: ButtonIconProps): JSX.Element {
-  const [isPressed, setIsPressed] = useState(false);
+  // const [isPressed, setIsPressed] = useState(false);
   const buttonColors: ButtonColors = getButtonColors({
     disabled,
-    pressed: isPressed,
+    pressed: false,
     variant,
   });
 
@@ -175,9 +175,9 @@ function ButtonIcon({
       <TouchableRipple
         borderless
         disabled={disabled}
-        rippleColor={buttonColors[0]}
-        onPressIn={() => setIsPressed(true)}
-        onPressOut={() => setIsPressed(false)}
+        // rippleColor={buttonColors[0]}
+        // onPressIn={() => setIsPressed(true)}
+        // onPressOut={() => setIsPressed(false)}
         {...rest}>
         <View
           style={[
