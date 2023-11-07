@@ -18,13 +18,17 @@ import {setupListeners} from '@reduxjs/toolkit/query';
 
 import {api} from '../services/api';
 import common from './commonStore';
-import menu, {initialMenuState} from './menuStore';
+import menuChoose from './menuChooseStore';
+import menuOrder from './menuOrderStore';
+import menu from './menuStore';
 import refund from './refundStore';
 import session, {initialSessionState} from './sessionStore';
 
 const reducers = combineReducers({
   common,
   menu,
+  menuChoose,
+  menuOrder,
   refund,
   session,
   [api.reducerPath]: api.reducer,
@@ -54,9 +58,6 @@ const persistConfig: PersistConfig<any> = {
     if (persistVersion > (state?._persist.version || 1)) {
       return Promise.resolve({
         ...state,
-        menu: {
-          ...initialMenuState,
-        },
         session: {
           ...initialSessionState,
         },

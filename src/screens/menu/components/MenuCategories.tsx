@@ -40,7 +40,7 @@ function Category({item}: CategoryProps): JSX.Element {
 
 function MenuCategories(): JSX.Element {
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         horizontal
         contentContainerStyle={styles.content}
@@ -54,10 +54,12 @@ function MenuCategories(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    gap: vs(12),
+  container: {
     paddingLeft: vs(22),
     paddingRight: vs(24),
+  },
+  content: {
+    gap: vs(12),
     paddingVertical: s(32),
   },
 });

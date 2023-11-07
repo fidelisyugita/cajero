@@ -1,9 +1,17 @@
 import React from 'react';
-import {Modal, StyleSheet, View, ViewProps, ViewStyle} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  StyleSheet,
+  View,
+  ViewProps,
+  ViewStyle,
+} from 'react-native';
 import {Surface} from 'react-native-paper';
 
 import {IcX} from '../assets/svgs';
-import {colors} from '../styles';
+import {colors, globalStyles} from '../styles';
 import {s, vs} from '../utils/scale';
 import ButtonIcon from './ButtonIcon';
 import Text from './Text';
@@ -68,11 +76,15 @@ function Popup({
       animationType="fade"
       supportedOrientations={['landscape', 'portrait']}
       visible={visible}>
-      <View style={styles.container}>
-        <View style={[styles.card, {height: s(height), width: vs(width)}]}>
-          {children}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={globalStyles.flex}>
+        <View style={styles.container}>
+          <View style={[styles.card, {height: s(height), width: vs(width)}]}>
+            {children}
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }

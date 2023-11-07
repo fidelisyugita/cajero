@@ -1,5 +1,4 @@
 // www.themealdb.com/api/json/v1/1/search.php?f=a
-import {waitMoment} from '../helpers/commonHelper';
 import {ProductProps} from '../interfaces/CommonInterface';
 import {api} from './api';
 
@@ -80,6 +79,55 @@ export const productApi = api.injectEndpoints({
           name: item.strMeal,
           price: Number(generateRandomFoodPrice(10000, 100000)),
           thumbnail: item.strMealThumb,
+          variants: {
+            size: {
+              items: {
+                extraLarge: {
+                  name: 'Extra Large',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+                large: {
+                  name: 'Large',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+                normal: {
+                  name: 'Normal',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+                small: {
+                  name: 'Small',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+              },
+              name: 'Size',
+              required: true,
+              type: 'single',
+            },
+            topping: {
+              items: {
+                bubble: {
+                  name: 'Bubble',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+                kitkat: {
+                  name: 'Kitkat',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+                oreo: {
+                  name: 'Oreo',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+                tublerone: {
+                  name: 'Tublerone',
+                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                },
+              },
+              max: 2,
+              name: 'Topping',
+              required: false,
+              type: 'multiple',
+            },
+          },
         }));
       },
     }),
@@ -94,8 +142,8 @@ function generateRandomFoodPrice(min: number, max: number) {
   const randomDecimal = Math.random();
   const randomPrice = min + randomDecimal * (max - min);
 
-  // Round the price to two decimal places for cents
-  const roundedPrice = Math.round(randomPrice * 100) / 100;
+  // Round the price down to the nearest multiple of 100
+  const roundedPrice = Math.floor(randomPrice / 100) * 100;
 
   // Format the price with the Indonesian Rupiah symbol (Rp)
   return roundedPrice.toFixed(0);

@@ -9,6 +9,7 @@ import IcCalculator from '../../assets/svgs/IcCalculator.svg';
 import IcCalculatorActive from '../../assets/svgs/IcCalculatorActive.svg';
 import IcCalendar from '../../assets/svgs/IcCalendar.svg';
 import IcCaretDown from '../../assets/svgs/IcCaretDown.svg';
+import IcCart from '../../assets/svgs/IcCart.svg';
 import IcCheckbox from '../../assets/svgs/IcCheckbox.svg';
 import IcCheckboxOutline from '../../assets/svgs/IcCheckboxOutline.svg';
 import IcEdit from '../../assets/svgs/IcEdit.svg';
@@ -23,8 +24,11 @@ import IcGoogle from '../../assets/svgs/IcGoogle.svg';
 import IcMagnify from '../../assets/svgs/IcMagnify.svg';
 import IcMenu from '../../assets/svgs/IcMenu.svg';
 import IcMenuActive from '../../assets/svgs/IcMenuActive.svg';
+import IcMinus from '../../assets/svgs/IcMinus.svg';
 import IcPlus from '../../assets/svgs/IcPlus.svg';
 import IcPrint from '../../assets/svgs/IcPrint.svg';
+import IcRadio from '../../assets/svgs/IcRadio.svg';
+import IcRadioOutline from '../../assets/svgs/IcRadioOutline.svg';
 import IcReceipt from '../../assets/svgs/IcReceipt.svg';
 import IcReceiptActive from '../../assets/svgs/IcReceiptActive.svg';
 import IcRefund from '../../assets/svgs/IcRefund.svg';
@@ -47,6 +51,7 @@ export {
   IcCalculatorActive,
   IcCalendar,
   IcCaretDown,
+  IcCart,
   IcCheckbox,
   IcCheckboxOutline,
   IcEdit,
@@ -61,8 +66,11 @@ export {
   IcMagnify,
   IcMenu,
   IcMenuActive,
+  IcMinus,
   IcPlus,
   IcPrint,
+  IcRadio,
+  IcRadioOutline,
   IcReceipt,
   IcReceiptActive,
   IcRefund,

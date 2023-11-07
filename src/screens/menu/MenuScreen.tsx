@@ -13,6 +13,7 @@ import Spacer from '../../components/Spacer';
 import Text from '../../components/Text';
 import {colors, globalStyles} from '../../styles';
 import {s, vs} from '../../utils/scale';
+import MenuAddProductPopup from './components/MenuAddProductPopup';
 import MenuMain from './components/MenuMain';
 
 type SummaryItemProps = {
@@ -171,6 +172,7 @@ function MenuScreen(): JSX.Element {
     <View style={styles.container}>
       <MenuMain />
       <Order />
+      <MenuAddProductPopup />
     </View>
   );
 }

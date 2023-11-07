@@ -8,17 +8,6 @@ import {fontStyle} from '../styles/fonts';
 import {s, vs} from '../utils/scale';
 import Text from './Text';
 
-// const data = [
-//   {label: 'Item 1', value: '1'},
-//   {label: 'Itemg 2', value: '2'},
-//   {label: 'Item 3', value: '3'},
-//   {label: 'Item 4', value: '4'},
-//   {label: 'Item 5', value: '5'},
-//   {label: 'Item 6', value: '6'},
-//   {label: 'Item 7', value: '7'},
-//   {label: 'Item 8', value: '8'},
-// ];
-
 type Size = 'large' | 'medium' | 'small';
 
 interface DropdownProps {
@@ -27,6 +16,7 @@ interface DropdownProps {
   renderRightIcon?: (visible?: boolean) => JSX.Element | null | undefined;
   data: [];
   width: number;
+  onChange: (item: any) => void;
 }
 
 function getStyle(size: Size) {
@@ -89,7 +79,6 @@ function Dropdown({
           <Text style={labelStyle}>{item.label}</Text>
         </View>
       )}
-      onChange={() => {}}
       {...rest}
     />
   );
