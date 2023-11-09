@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 // www.themealdb.com/api/json/v1/1/search.php?f=a
 import {ProductProps} from '../interfaces/CommonInterface';
 import {api} from './api';
@@ -82,21 +83,21 @@ export const productApi = api.injectEndpoints({
           variants: {
             size: {
               items: {
-                extraLarge: {
-                  name: 'Extra Large',
-                  price: Number(generateRandomFoodPrice(1000, 5000)),
-                },
-                large: {
-                  name: 'Large',
-                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                small: {
+                  name: 'Small',
+                  price: 0,
                 },
                 normal: {
                   name: 'Normal',
-                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                  price: Number(generateRandomFoodPrice(1000, 2000)),
                 },
-                small: {
-                  name: 'Small',
-                  price: Number(generateRandomFoodPrice(1000, 5000)),
+                large: {
+                  name: 'Large',
+                  price: Number(generateRandomFoodPrice(3000, 5000)),
+                },
+                extraLarge: {
+                  name: 'Extra Large',
+                  price: Number(generateRandomFoodPrice(5000, 7000)),
                 },
               },
               name: 'Size',

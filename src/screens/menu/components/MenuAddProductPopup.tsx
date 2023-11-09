@@ -8,6 +8,7 @@ import {createSelector} from '@reduxjs/toolkit';
 import {FlashList} from '@shopify/flash-list';
 
 import {
+  IcArrowCircleRight,
   IcArrowDown,
   IcArrowUp,
   IcCart,
@@ -32,7 +33,10 @@ import {
   setProductNotes,
   subtractQtyProduct,
 } from '../../../store/menuChooseStore';
-import {addProductToOrderList} from '../../../store/menuOrderStore';
+import {
+  addProductToOrderList,
+  editProductInOrderList,
+} from '../../../store/menuOrderStore';
 import {colors, globalStyles} from '../../../styles';
 import {currencyPrice} from '../../../utils/convert';
 import {s, vs} from '../../../utils/scale';
@@ -233,18 +237,27 @@ function PopupFooter(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const disabled = useSelector((state: RootStateProps) => {
+  const {disabled, isEdit} = useSelector((state: RootStateProps) => {
     const variants = state.menuChoose.product?.variants;
 
     if (!variants) {
-      return false;
+      return {
+        disabled: false,
+        isEdit: !!state.menuChoose.product?.productOrderId,
+      };
     }
 
-    return Object.values(variants).some(variant => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const disabled = Object.values(variants).some(variant => {
       return (
         variant.required && (!variant.selected || variant.selected.length < 1)
       );
     });
+
+    return {
+      disabled,
+      isEdit: !!state.menuChoose.product?.productOrderId,
+    };
   }, shallowEqual);
 
   const addToOrderList = () => {
@@ -267,16 +280,23 @@ function PopupFooter(): JSX.Element {
     dispatch(chooseProduct(undefined));
   };
 
+  const editOrderList = () => {
+    const product = store.getState()?.menuChoose?.product;
+
+    dispatch(editProductInOrderList(product));
+    dispatch(chooseProduct(undefined));
+  };
+
+  const Icon = !isEdit ? IcCart : IcArrowCircleRight;
+
   return (
     <Popup.Footer>
       <Button
         disabled={disabled}
+        left={<Icon color={colors.neutral.c100} height={s(24)} width={s(24)} />}
         size="large"
-        left={
-          <IcCart color={colors.neutral.c100} height={s(24)} width={s(24)} />
-        }
-        onPress={addToOrderList}>
-        {t('Add to Order List')}
+        onPress={!isEdit ? addToOrderList : editOrderList}>
+        {t(!isEdit ? 'Add to Order List' : 'Save')}
       </Button>
     </Popup.Footer>
   );
@@ -310,14 +330,18 @@ function MenuAddProductPopup(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const visible = useSelector(
-    (state: RootStateProps) => !!state.menuChoose.product?.id,
+  const {isEdit, visible} = useSelector(
+    (state: RootStateProps) => ({
+      isEdit: !!state.menuChoose.product?.productOrderId,
+      visible: !!state.menuChoose.product?.id,
+    }),
+    shallowEqual,
   );
 
   return (
     <Popup height={674} visible={visible} width={697}>
       <Popup.Header
-        title={t('Add Item')}
+        title={t(!isEdit ? 'Add Item' : 'Edit Item')}
         onClose={() => dispatch(chooseProduct(undefined))}
       />
 

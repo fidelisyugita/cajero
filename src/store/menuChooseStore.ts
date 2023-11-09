@@ -10,6 +10,7 @@ type DiscountProps = {
 export type MenuChooseStateProps = {
   product?: ProductProps & {
     discount?: DiscountProps;
+    productOrderId?: string;
     qty: number;
     note?: string;
   };

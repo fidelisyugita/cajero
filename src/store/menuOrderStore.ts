@@ -44,6 +44,18 @@ const slice = createSlice({
         orderList.push(action.payload);
       }
     },
+    editProductInOrderList: (
+      state,
+      action: PayloadAction<ProductOrderProps>,
+    ) => {
+      const index = state.orderList.findIndex(
+        ol => ol.productOrderId === action.payload.productOrderId,
+      );
+
+      if (index > -1) {
+        state.orderList[index] = action.payload;
+      }
+    },
     removeAllProductFromOrderList: state => {
       state.orderList = [];
     },
@@ -60,6 +72,7 @@ const slice = createSlice({
 
 export const {
   addProductToOrderList,
+  editProductInOrderList,
   removeAllProductFromOrderList,
   removeProductFromOrderList,
   setRemoveAllOrderListPopup,

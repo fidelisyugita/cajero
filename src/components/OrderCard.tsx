@@ -6,7 +6,9 @@ import {useDispatch} from 'react-redux';
 
 import {IcCaretDown, IcCaretRight, IcEdit, IcTrash} from '../assets/svgs';
 import {ProductOrderProps} from '../interfaces/CommonInterface';
+import {chooseProduct} from '../store/menuChooseStore';
 import {removeProductFromOrderList} from '../store/menuOrderStore';
+import {setAddProductPopupProps} from '../store/menuStore';
 import {colors, globalStyles} from '../styles';
 import {currencyPrice} from '../utils/convert';
 import {s, vs} from '../utils/scale';
@@ -34,10 +36,12 @@ function discountTransform(discount: {
 function getTotalSelectedVariantPrice(variants: ProductOrderProps['variants']) {
   let totalPrice = 0;
   if (variants) {
-    Object.keys(variants).map(variant => {
-      totalPrice += variants[variant]?.selected.reduce((acc, variantItem) => {
-        return acc + variants[variant].items[variantItem].price;
-      }, 0);
+    Object.keys(variants).forEach(variant => {
+      if (variants[variant].selected) {
+        totalPrice += variants[variant].selected.reduce((acc, variantItem) => {
+          return acc + variants[variant].items[variantItem].price;
+        }, 0);
+      }
     });
   }
 
@@ -178,7 +182,8 @@ function OrderCard({item}: OrderCardProps): JSX.Element {
                   height={s(16)}
                   width={s(16)}
                 />
-              }>
+              }
+              onPress={() => dispatch(chooseProduct(item))}>
               {t('Edit')}
             </Button>
             <Button
