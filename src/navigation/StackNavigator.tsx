@@ -9,6 +9,7 @@ import {StackParamList} from '../interfaces/NavigationInterface';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
+import OrderTransactionScreen from '../screens/menu/OrderTransactionScreen';
 import ReceiptDetailsScreen from '../screens/receipt/ReceiptDetailsScreen';
 import {RootStateProps} from '../store';
 import SideNavigator from './SideNavigator';
@@ -61,6 +62,15 @@ function StackNavigator(): JSX.Element {
               freezeOnBlur: true,
               header: props => <Header {...props} />,
               headerTitle: t('Receipt Details'),
+            }}
+          />
+          <Stack.Screen
+            component={OrderTransactionScreen}
+            name="OrderTransactionScreen"
+            options={{
+              freezeOnBlur: true,
+              header: props => <Header {...props} />,
+              headerTitle: t('Transaction'),
             }}
           />
         </>

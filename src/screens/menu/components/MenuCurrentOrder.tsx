@@ -4,8 +4,9 @@ import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
 import {Surface} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch, useSelector} from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 
+import {useNavigation} from '@react-navigation/native';
 import {createSelector} from '@reduxjs/toolkit';
 import {FlashList} from '@shopify/flash-list';
 
@@ -133,6 +134,35 @@ function OrderList(): JSX.Element {
   );
 }
 
+function Proceed(): JSX.Element {
+  const {t} = useTranslation();
+  const navigation = useNavigation();
+  const disabled = useSelector((state: RootStateProps) => {
+    const order = state.menuOrder;
+    return (
+      !order.customerName || !order.tableNumber || order.orderList.length < 1
+    );
+  }, shallowEqual);
+
+  return (
+    <Button
+      containerStyle={globalStyles.flex}
+      disabled={disabled}
+      size="medium"
+      variant="primary"
+      left={
+        <IcArrowCircleRight
+          color={colors.primary.c100}
+          height={s(20)}
+          width={s(20)}
+        />
+      }
+      onPress={() => navigation.navigate('OrderTransactionScreen')}>
+      {t('Proceed')}
+    </Button>
+  );
+}
+
 function MenuCurrentOrder(): JSX.Element {
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
@@ -224,20 +254,7 @@ function MenuCurrentOrder(): JSX.Element {
               },
             },
           }}>
-          <Button
-            disabled
-            containerStyle={globalStyles.flex}
-            size="medium"
-            variant="primary"
-            left={
-              <IcArrowCircleRight
-                color={colors.primary.c100}
-                height={s(20)}
-                width={s(20)}
-              />
-            }>
-            {t('Proceed')}
-          </Button>
+          <Proceed />
         </Surface>
       </View>
     </Surface>

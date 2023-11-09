@@ -34,6 +34,7 @@ export type StackParamList = {
   ReceiptDetailsScreen: {
     id: number;
   };
+  OrderTransactionScreen: undefined;
   SideNavigator: NavigatorScreenParams<SideNavigatorParamList>;
 };
 
