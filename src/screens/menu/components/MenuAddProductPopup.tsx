@@ -2,6 +2,7 @@ import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import ShortUniqueId from 'short-unique-id';
 
 import {createSelector} from '@reduxjs/toolkit';
 import {FlashList} from '@shopify/flash-list';
@@ -247,12 +248,23 @@ function PopupFooter(): JSX.Element {
   }, shallowEqual);
 
   const addToOrderList = () => {
+    const uid = new ShortUniqueId();
     const product = store.getState()?.menuChoose?.product;
+    const productOrderId = uid.rnd();
 
-    if (product) {
-      dispatch(addProductToOrderList(product));
-      dispatch(chooseProduct(undefined));
+    if (product && product.discount && !product.discount.type) {
+      const discount = {...product.discount, type: 'percent'};
+      dispatch(addProductToOrderList({...product, discount, productOrderId}));
+    } else if (product) {
+      dispatch(
+        addProductToOrderList({
+          ...product,
+          discount: product.discount,
+          productOrderId,
+        }),
+      );
     }
+    dispatch(chooseProduct(undefined));
   };
 
   return (
@@ -270,16 +282,36 @@ function PopupFooter(): JSX.Element {
   );
 }
 
+function PopupBody(): JSX.Element {
+  const thumbnail = useSelector(
+    (state: RootStateProps) => state.menuChoose.product?.thumbnail,
+    shallowEqual,
+  );
+  return (
+    <Popup.Body>
+      <View style={styles.body}>
+        <View style={styles.leftSide}>
+          <Image
+            withSkeleton
+            height={s(171)}
+            radius={s(4)}
+            source={{uri: thumbnail}}
+            width={vs(314)}
+          />
+          <AdjustQuantity />
+        </View>
+        <MList />
+      </View>
+    </Popup.Body>
+  );
+}
+
 function MenuAddProductPopup(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const {thumbnail, visible} = useSelector(
-    (state: RootStateProps) => ({
-      thumbnail: state.menuChoose.product?.thumbnail,
-      visible: Boolean(state.menuChoose.product),
-    }),
-    shallowEqual,
+  const visible = useSelector(
+    (state: RootStateProps) => !!state.menuChoose.product?.id,
   );
 
   return (
@@ -289,21 +321,7 @@ function MenuAddProductPopup(): JSX.Element {
         onClose={() => dispatch(chooseProduct(undefined))}
       />
 
-      <Popup.Body>
-        <View style={styles.body}>
-          <View style={styles.leftSide}>
-            <Image
-              withSkeleton
-              height={s(171)}
-              radius={s(4)}
-              source={{uri: thumbnail}}
-              width={vs(314)}
-            />
-            <AdjustQuantity />
-          </View>
-          <MList />
-        </View>
-      </Popup.Body>
+      <PopupBody />
       <PopupFooter />
     </Popup>
   );
@@ -354,4 +372,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuAddProductPopup;
+export default memo(MenuAddProductPopup);

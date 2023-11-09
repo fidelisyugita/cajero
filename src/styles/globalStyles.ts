@@ -28,6 +28,9 @@ export default StyleSheet.create({
     backgroundColor: colors.neutral.c300,
     height: 1,
   },
+  row: {
+    flexDirection: 'row',
+  },
   rowBetween: {
     alignItems: 'center',
     flexDirection: 'row',

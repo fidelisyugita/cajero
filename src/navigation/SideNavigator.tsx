@@ -35,17 +35,17 @@ function SideNavigator(): JSX.Element {
         options={{title: t('Expenses')}}
       />
       <Side.Screen
-        component={MenuScreen}
+        component={StockScreen}
         name="ReportScreen"
         options={{title: t('Report')}}
       />
       <Side.Screen
-        component={MenuScreen}
+        component={StockScreen}
         name="BusinessScreen"
         options={{title: t('Business')}}
       />
       <Side.Screen
-        component={MenuScreen}
+        component={StockScreen}
         name="SettingScreen"
         options={{title: t('Settings')}}
       />

@@ -9,6 +9,7 @@ import IcCalculator from '../../assets/svgs/IcCalculator.svg';
 import IcCalculatorActive from '../../assets/svgs/IcCalculatorActive.svg';
 import IcCalendar from '../../assets/svgs/IcCalendar.svg';
 import IcCaretDown from '../../assets/svgs/IcCaretDown.svg';
+import IcCaretRight from '../../assets/svgs/IcCaretRight.svg';
 import IcCart from '../../assets/svgs/IcCart.svg';
 import IcCheckbox from '../../assets/svgs/IcCheckbox.svg';
 import IcCheckboxOutline from '../../assets/svgs/IcCheckboxOutline.svg';
@@ -35,6 +36,7 @@ import IcRefund from '../../assets/svgs/IcRefund.svg';
 import IcSignOut from '../../assets/svgs/IcSignOut.svg';
 import IcStock from '../../assets/svgs/IcStock.svg';
 import IcTable from '../../assets/svgs/IcTable.svg';
+import IcTrash from '../../assets/svgs/IcTrash.svg';
 import IcUser from '../../assets/svgs/IcUser.svg';
 import IcX from '../../assets/svgs/IcX.svg';
 import Logo from '../../assets/svgs/Logo.svg';
@@ -51,6 +53,7 @@ export {
   IcCalculatorActive,
   IcCalendar,
   IcCaretDown,
+  IcCaretRight,
   IcCart,
   IcCheckbox,
   IcCheckboxOutline,
@@ -77,6 +80,7 @@ export {
   IcSignOut,
   IcStock,
   IcTable,
+  IcTrash,
   IcUser,
   IcX,
   Logo,

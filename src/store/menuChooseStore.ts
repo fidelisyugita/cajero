@@ -69,7 +69,7 @@ const slice = createSlice({
           ...state.product.variants,
           [objectKey]: {
             ...state.product.variants[objectKey],
-            selected: updatedSelected,
+            selected: updatedSelected.sort(),
           },
         };
       }

@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode} from 'react';
 import {StyleSheet, TextProps, View, ViewStyle} from 'react-native';
 import {TouchableRipple, TouchableRippleProps} from 'react-native-paper';
 
@@ -7,7 +7,14 @@ import {fontStyle} from '../styles/fonts';
 import {s, vs} from '../utils/scale';
 import Text from './Text';
 
-type Variant = 'primary' | 'secondary' | 'soft' | 'link' | 'neutral';
+type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'soft'
+  | 'link'
+  | 'neutral'
+  | 'positif'
+  | 'warning';
 
 type Size = 'large' | 'medium' | 'small';
 interface ButtonProps extends TouchableRippleProps {
@@ -33,7 +40,7 @@ function getButtonColors({
   disabled: boolean;
   pressed: boolean;
 }): ButtonColors {
-  const {neutral, pressed: press, primary} = colors;
+  const {error, neutral, positif, pressed: press, primary} = colors;
   const color = {
     link: [
       undefined,
@@ -56,6 +63,17 @@ function getButtonColors({
       neutral.c200,
       neutral.c300,
       neutral.c400,
+    ],
+    positif: [
+      positif.c400,
+      undefined,
+      neutral.c100,
+      press.c9,
+      undefined,
+      neutral.c100,
+      positif.c200,
+      undefined,
+      neutral.c100,
     ],
     primary: [
       primary.c400,
@@ -90,6 +108,17 @@ function getButtonColors({
       primary.c300,
       primary.c200,
     ],
+    warning: [
+      error.c400,
+      undefined,
+      neutral.c100,
+      press.c5,
+      undefined,
+      neutral.c100,
+      error.c200,
+      undefined,
+      neutral.c100,
+    ],
   };
 
   if (pressed) {
@@ -105,9 +134,11 @@ function getButtonBorderWidth({variant}: {variant: Variant}): number {
   const borderWidth = {
     link: 0,
     neutral: 1,
+    positif: 0,
     primary: 0,
     secondary: 1,
     soft: 1,
+    warning: 0,
   };
 
   return borderWidth[variant];

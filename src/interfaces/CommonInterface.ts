@@ -1,3 +1,15 @@
+export type ProductOrderProps = ProductProps & {
+  discount: DiscountProps;
+  qty: number;
+  note: string;
+  productOrderId: string;
+};
+
+type DiscountProps = {
+  type: 'percent' | 'amount';
+  value: string;
+};
+
 export interface ProductProps {
   id: string;
   name: string;

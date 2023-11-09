@@ -66,6 +66,7 @@ function MenuProductList(): JSX.Element {
           keyExtractor={item => item.id}
           numColumns={4}
           renderItem={({item}) => <ProductCard item={item} />}
+          showsVerticalScrollIndicator={false}
         />
       )}
 
@@ -87,14 +88,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: vs(24),
     zIndex: 3,
-  },
-  productCard: {
-    backgroundColor: colors.neutral.c100,
-    borderColor: colors.neutral.c300,
-    borderRadius: s(8),
-    borderWidth: 1,
-    padding: s(12),
-    width: vs(201),
   },
 });
 
