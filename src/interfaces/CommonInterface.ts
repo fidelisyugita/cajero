@@ -3,6 +3,7 @@ export type ProductOrderProps = ProductProps & {
   qty: number;
   note: string;
   productOrderId: string;
+  totalPrice: number;
 };
 
 type DiscountProps = {

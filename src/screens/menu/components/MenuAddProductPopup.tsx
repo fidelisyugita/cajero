@@ -39,6 +39,7 @@ import {
 } from '../../../store/menuOrderStore';
 import {colors, globalStyles} from '../../../styles';
 import {currencyPrice} from '../../../utils/convert';
+import {getFinalPriceItem} from '../../../utils/price';
 import {s, vs} from '../../../utils/scale';
 import MenuOptionCard from './MenuOptionCard';
 
@@ -259,31 +260,40 @@ function PopupFooter(): JSX.Element {
       isEdit: !!state.menuChoose.product?.productOrderId,
     };
   }, shallowEqual);
-
   const addToOrderList = () => {
     const uid = new ShortUniqueId();
     const product = store.getState()?.menuChoose?.product;
-    const productOrderId = uid.rnd();
 
-    if (product && product.discount && !product.discount.type) {
-      const discount = {...product.discount, type: 'percent'};
-      dispatch(addProductToOrderList({...product, discount, productOrderId}));
-    } else if (product) {
+    if (product) {
+      const productOrderId = uid.rnd();
+      const finalProduct = {
+        ...product,
+        discount: product.discount
+          ? {...product.discount, type: 'percent'}
+          : undefined,
+        productOrderId,
+      };
+
       dispatch(
         addProductToOrderList({
-          ...product,
-          discount: product.discount,
-          productOrderId,
+          ...finalProduct,
+          totalPrice: getFinalPriceItem(finalProduct),
         }),
       );
+
+      dispatch(chooseProduct(undefined));
     }
-    dispatch(chooseProduct(undefined));
   };
 
   const editOrderList = () => {
     const product = store.getState()?.menuChoose?.product;
 
-    dispatch(editProductInOrderList(product));
+    dispatch(
+      editProductInOrderList({
+        ...product,
+        totalPrice: getFinalPriceItem(product),
+      }),
+    );
     dispatch(chooseProduct(undefined));
   };
 

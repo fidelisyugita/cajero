@@ -8,7 +8,6 @@ import {IcCaretDown, IcCaretRight, IcEdit, IcTrash} from '../assets/svgs';
 import {ProductOrderProps} from '../interfaces/CommonInterface';
 import {chooseProduct} from '../store/menuChooseStore';
 import {removeProductFromOrderList} from '../store/menuOrderStore';
-import {setAddProductPopupProps} from '../store/menuStore';
 import {colors, globalStyles} from '../styles';
 import {currencyPrice} from '../utils/convert';
 import {s, vs} from '../utils/scale';
@@ -33,43 +32,13 @@ function discountTransform(discount: {
   return '-';
 }
 
-function getTotalSelectedVariantPrice(variants: ProductOrderProps['variants']) {
-  let totalPrice = 0;
-  if (variants) {
-    Object.keys(variants).forEach(variant => {
-      if (variants[variant].selected) {
-        totalPrice += variants[variant].selected.reduce((acc, variantItem) => {
-          return acc + variants[variant].items[variantItem].price;
-        }, 0);
-      }
-    });
-  }
-
-  return totalPrice;
-}
-
-function getFinalPriceItem(item: ProductOrderProps) {
-  const {discount, price, qty, variants} = item;
-  const discountValue =
-    discount?.type === 'amount'
-      ? Number(discount.value || 0)
-      : (Number(discount?.value || 0) / 100) * price;
-
-  const variantValue = getTotalSelectedVariantPrice(variants);
-
-  const totalPrice = (price - discountValue + variantValue) * qty;
-
-  return currencyPrice(totalPrice);
-}
-
 function OrderCard({item}: OrderCardProps): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const {discount, name, note, productOrderId, qty, variants} = item;
+  const {discount, name, note, productOrderId, qty, totalPrice, variants} =
+    item;
 
   const [isOpen, setOpen] = useState<boolean>(false);
-
-  const finalPriceItem = getFinalPriceItem(item);
 
   return (
     <TouchableRipple
@@ -105,7 +74,7 @@ function OrderCard({item}: OrderCardProps): JSX.Element {
             </Text>
           </View>
           <Spacer width={12} />
-          <Text textStyle="heading5">{finalPriceItem}</Text>
+          <Text textStyle="heading5">{currencyPrice(totalPrice)}</Text>
         </View>
 
         <View style={styles.detailsFrame}>

@@ -7,11 +7,15 @@ import {ProductOrderProps} from '../interfaces/CommonInterface';
 export type MenuOrderStateProps = {
   orderList: ProductOrderProps[] | [];
   removeAllOrderListPopup: boolean;
+  customerName: string;
+  tableNumber: string;
 };
 
 export const initialMenuOrderState: MenuOrderStateProps = {
+  customerName: '',
   orderList: [],
   removeAllOrderListPopup: false,
+  tableNumber: '',
 };
 
 const slice = createSlice({
@@ -64,8 +68,14 @@ const slice = createSlice({
         todo => todo.productOrderId !== action.payload,
       );
     },
+    setCustomerName: (state, action: PayloadAction<string>) => {
+      state.customerName = action.payload;
+    },
     setRemoveAllOrderListPopup: (state, action: PayloadAction<boolean>) => {
       state.removeAllOrderListPopup = action.payload;
+    },
+    setTableNumber: (state, action: PayloadAction<string>) => {
+      state.tableNumber = action.payload;
     },
   },
 });
@@ -75,7 +85,9 @@ export const {
   editProductInOrderList,
   removeAllProductFromOrderList,
   removeProductFromOrderList,
+  setCustomerName,
   setRemoveAllOrderListPopup,
+  setTableNumber,
 } = slice.actions;
 
 export default slice.reducer;

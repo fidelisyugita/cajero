@@ -6,6 +6,7 @@ import {Surface} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 
+import {createSelector} from '@reduxjs/toolkit';
 import {FlashList} from '@shopify/flash-list';
 
 import {IcArrowCircleRight, IcTable, IcUser} from '../../../assets/svgs';
@@ -17,10 +18,12 @@ import Spacer from '../../../components/Spacer';
 import Text from '../../../components/Text';
 import {RootStateProps} from '../../../store';
 import {
-  deleteAllProductFromOrderList,
+  setCustomerName,
   setRemoveAllOrderListPopup,
+  setTableNumber,
 } from '../../../store/menuOrderStore';
 import {colors, globalStyles} from '../../../styles';
+import {currencyPrice} from '../../../utils/convert';
 import {s, vs} from '../../../utils/scale';
 
 type SummaryItemProps = {
@@ -28,13 +31,25 @@ type SummaryItemProps = {
   value: string;
 };
 
+const subtotalSelector = (state: RootStateProps) =>
+  state.menuOrder.orderList.reduce((acc, ol) => acc + ol.totalPrice, 0);
+
+const orderSelector = createSelector([subtotalSelector], state => ({
+  subtotal: state,
+}));
+
 function OrderSummary(): JSX.Element {
   const {t} = useTranslation();
+
+  const {subtotal} = useSelector(orderSelector);
 
   return (
     <View style={styles.orderSummary}>
       <View style={styles.summaryWrapper}>
-        <SummaryItem label={t('Subtotal')} value="-" />
+        <SummaryItem
+          label={t('Subtotal')}
+          value={subtotal ? currencyPrice(subtotal) : '-'}
+        />
         <SummaryItem label={t('Discount')} value="-" />
         <SummaryItem label={t('Tax')} value="-" />
       </View>
@@ -67,8 +82,38 @@ function separator() {
   return <Spacer height={8} />;
 }
 
-function OrderList(): JSX.Element {
+function ListFooterComponent(): JSX.Element {
   const {t} = useTranslation();
+
+  const disabled = useSelector(
+    (state: RootStateProps) => state.menuOrder.orderList.length < 1,
+  );
+
+  return (
+    <>
+      <Spacer height={20} />
+      <Text textStyle="labelMedium">{t('Add')}</Text>
+      <Spacer height={12} />
+      <View style={globalStyles.rowBetween}>
+        <Button
+          containerStyle={globalStyles.flex}
+          disabled={disabled}
+          size="small"
+          variant="secondary">
+          {t('Discount')}
+        </Button>
+      </View>
+
+      <Spacer height={16} />
+
+      <Text textStyle="labelMedium">{t('Order Summary')}</Text>
+      <Spacer height={12} />
+      <OrderSummary />
+    </>
+  );
+}
+
+function OrderList(): JSX.Element {
   const orderList = useSelector(
     (state: RootStateProps) => state.menuOrder.orderList,
   );
@@ -77,33 +122,12 @@ function OrderList(): JSX.Element {
     <View style={styles.list}>
       <FlashList
         ItemSeparatorComponent={separator}
+        ListFooterComponent={ListFooterComponent}
         contentContainerStyle={styles.content}
         data={orderList}
         estimatedItemSize={100}
         keyExtractor={item => item.productOrderId}
         renderItem={({item}) => <OrderCard item={item} />}
-        ListFooterComponent={
-          <>
-            <Spacer height={20} />
-            <Text textStyle="labelMedium">{t('Add')}</Text>
-            <Spacer height={12} />
-            <View style={globalStyles.rowBetween}>
-              <Button
-                disabled
-                containerStyle={globalStyles.flex}
-                size="small"
-                variant="secondary">
-                {t('Discount')}
-              </Button>
-            </View>
-
-            <Spacer height={16} />
-
-            <Text textStyle="labelMedium">{t('Order Summary')}</Text>
-            <Spacer height={12} />
-            <OrderSummary />
-          </>
-        }
       />
     </View>
   );
@@ -113,6 +137,10 @@ function MenuCurrentOrder(): JSX.Element {
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
+
+  const disabled = useSelector(
+    (state: RootStateProps) => state.menuOrder.orderList.length < 1,
+  );
 
   return (
     <Surface
@@ -137,7 +165,9 @@ function MenuCurrentOrder(): JSX.Element {
           <Spacer height={20} />
           <View style={styles.formCustomer}>
             <InputField2
+              autoCorrect={false}
               containerStyle={styles.customerField}
+              maxLength={20}
               placeholder={t('Customer Name')}
               size="small"
               left={
@@ -147,11 +177,13 @@ function MenuCurrentOrder(): JSX.Element {
                   width={s(20)}
                 />
               }
+              onChangeText={val => dispatch(setCustomerName(val))}
             />
             <InputField2
               containerStyle={styles.tableField}
+              keyboardType="number-pad"
+              maxLength={3}
               size="small"
-              value={'0'}
               left={
                 <IcTable
                   color={colors.neutral.c600}
@@ -159,6 +191,7 @@ function MenuCurrentOrder(): JSX.Element {
                   width={s(20)}
                 />
               }
+              onChangeText={val => dispatch(setTableNumber(val))}
             />
           </View>
 
@@ -168,6 +201,7 @@ function MenuCurrentOrder(): JSX.Element {
             <Text textStyle="labelMedium">{t('Order List')}</Text>
 
             <Button
+              disabled={disabled}
               size="small"
               variant="link"
               onPress={() => dispatch(setRemoveAllOrderListPopup(true))}>
