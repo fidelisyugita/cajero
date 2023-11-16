@@ -1,10 +1,10 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {Surface} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import images from '../../../assets/images';
+import {Logo} from '../../../assets/svgs';
 import Button from '../../../components/Button';
 import Spacer from '../../../components/Spacer';
 import Text from '../../../components/Text';
@@ -76,7 +76,6 @@ function LoginWelcome({
   reverse,
 }: LoginWelcomeProps): JSX.Element {
   const {t} = useTranslation();
-  const insets = useSafeAreaInsets();
 
   return (
     <Surface elevation={4} style={styles.left}>
@@ -85,11 +84,7 @@ function LoginWelcome({
         {t('Welcome to Your Point of Sale!')}
       </Text>
 
-      <Spacer height={282} />
-      <Image
-        source={images.logo}
-        style={[styles.logo, {top: insets.top + s(289)}]}
-      />
+      <Logo height={s(320)} width={s(320)} />
 
       <Text style={globalStyles.textCenter} textStyle="bodyTextXLarge">
         {t('Welcome POS Description')}
@@ -142,11 +137,6 @@ const styles = StyleSheet.create({
     height: s(1024),
     width: vs(785),
     ...globalStyles.center,
-  },
-  logo: {
-    height: s(346),
-    position: 'absolute',
-    width: s(345),
   },
 });
 

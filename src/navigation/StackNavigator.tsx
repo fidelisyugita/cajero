@@ -10,6 +10,8 @@ import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
 import OrderTransactionScreen from '../screens/menu/OrderTransactionScreen';
+import AddProductScreen from '../screens/product/AddProductScreen';
+import EditProductScreen from '../screens/product/EditProductScreen';
 import ReceiptDetailsScreen from '../screens/receipt/ReceiptDetailsScreen';
 import {RootStateProps} from '../store';
 import SideNavigator from './SideNavigator';
@@ -71,6 +73,24 @@ function StackNavigator(): JSX.Element {
               freezeOnBlur: true,
               header: props => <Header {...props} />,
               headerTitle: t('Transaction'),
+            }}
+          />
+          <Stack.Screen
+            component={AddProductScreen}
+            name="AddProductScreen"
+            options={{
+              freezeOnBlur: true,
+              header: props => <Header {...props} />,
+              headerTitle: t('Add New Product'),
+            }}
+          />
+          <Stack.Screen
+            component={EditProductScreen}
+            name="EditProductScreen"
+            options={{
+              freezeOnBlur: true,
+              header: props => <Header {...props} />,
+              headerTitle: t('Edit Product & Category'),
             }}
           />
         </>

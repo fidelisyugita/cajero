@@ -36,6 +36,8 @@ export type StackParamList = {
   };
   OrderTransactionScreen: undefined;
   SideNavigator: NavigatorScreenParams<SideNavigatorParamList>;
+  AddProductScreen: undefined;
+  EditProductScreen: undefined;
 };
 
 export type StackProps<T extends keyof StackParamList> = NativeStackScreenProps<

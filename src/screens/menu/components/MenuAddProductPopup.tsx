@@ -269,7 +269,7 @@ function PopupFooter(): JSX.Element {
       const productOrderId = uid.rnd();
       const finalProduct = {
         ...product,
-        discount: product.discount
+        discount: product.discount?.value
           ? {...product.discount, type: 'percent'}
           : undefined,
         productOrderId,
@@ -292,6 +292,9 @@ function PopupFooter(): JSX.Element {
     dispatch(
       editProductInOrderList({
         ...product,
+        discount: product.discount?.value
+          ? {...product.discount, type: 'percent'}
+          : undefined,
         totalPrice: getFinalPriceItem(product),
       }),
     );

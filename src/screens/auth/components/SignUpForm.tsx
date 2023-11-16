@@ -21,12 +21,14 @@ type FormLogin = {
   email: string;
   password: string;
   confirmPassword: string;
+  fullName: string;
 };
 
 const schema = yup
   .object({
     confirmPassword: yup.string().min(8).label('Confirm Password').required(),
     email: yup.string().email().label('Email').required(),
+    fullName: yup.string().min(3).label('Full Name').required(),
     password: yup.string().min(8).label('Password').required(),
   })
   .required();
@@ -40,6 +42,7 @@ function SignUpForm(): JSX.Element {
     defaultValues: {
       confirmPassword: '',
       email: '',
+      fullName: '',
       password: '',
     },
     reValidateMode: 'onChange',
@@ -54,6 +57,28 @@ function SignUpForm(): JSX.Element {
 
   return (
     <View style={styles.formContainer}>
+      <Controller
+        control={control}
+        name="fullName"
+        render={({field: {onChange, ref, value}, fieldState: {error}}) => (
+          <InputField2
+            errorMessage={t(error?.message)}
+            label={t('Full Name')}
+            placeholder={t('Full Name')}
+            ref={ref}
+            returnKeyType="next"
+            value={value}
+            onChangeText={onChange}
+            onSubmitEditing={() => setFocus('email')}
+          />
+        )}
+        rules={{
+          required: true,
+        }}
+      />
+
+      <Spacer height={16} />
+
       <Controller
         control={control}
         name="email"

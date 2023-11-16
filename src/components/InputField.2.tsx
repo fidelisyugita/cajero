@@ -156,7 +156,7 @@ const InputField2 = forwardRef<TextInput, InputFieldProps>(
               borderColor: isError
                 ? colors.error.c300
                 : isFocused
-                ? colors.neutral.c500
+                ? colors.neutral.c400
                 : colors.neutral.c300,
               height,
             },

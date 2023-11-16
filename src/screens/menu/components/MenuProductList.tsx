@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
+import {useNavigation} from '@react-navigation/native';
 import {FlashList} from '@shopify/flash-list';
 
 import {IcEdit, IcPlus} from '../../../assets/svgs';
@@ -19,6 +20,7 @@ import {s, vs} from '../../../utils/scale';
 const skeletonProducts = generateObjectArray(8);
 
 function FloatingAction(): JSX.Element {
+  const navigation = useNavigation();
   return (
     <View style={styles.fabContainer}>
       <ButtonIcon
@@ -26,8 +28,13 @@ function FloatingAction(): JSX.Element {
         backgroundColor={colors.neutral.c100}
         size="large"
         variant="secondary"
+        onPress={() => navigation.navigate('EditProductScreen')}
       />
-      <ButtonIcon IconComponent={IcPlus} size="large" />
+      <ButtonIcon
+        IconComponent={IcPlus}
+        size="large"
+        onPress={() => navigation.navigate('AddProductScreen')}
+      />
     </View>
   );
 }

@@ -35,12 +35,15 @@ const slice = createSlice({
       const {orderList} = state;
       const existingProductIndex = orderList.findIndex(ol => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {productOrderId, qty, totalPrice, ...compareA} = ol;
+        const {discount, note, productOrderId, qty, totalPrice, ...compareA} =
+          ol;
 
         const {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          productOrderId: productOrderIdB,
+          discount: discountB,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          note: noteB,
+          productOrderId: productOrderIdB,
           qty: qtyB,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           totalPrice: totalPriceB,
@@ -55,6 +58,8 @@ const slice = createSlice({
         orderList[existingProductIndex].totalPrice =
           orderList[existingProductIndex].totalPrice +
           action.payload.totalPrice;
+        orderList[existingProductIndex].note = action.payload.note;
+        orderList[existingProductIndex].discount = action.payload.discount;
       } else {
         orderList.push(action.payload);
       }
