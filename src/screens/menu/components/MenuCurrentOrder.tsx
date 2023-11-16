@@ -202,6 +202,47 @@ function Proceed(): JSX.Element {
   );
 }
 
+function FormCustomer(): JSX.Element {
+  const {t} = useTranslation();
+  const dispatch = useDispatch();
+
+  const {customerName, tableNumber} = useSelector(
+    (state: RootStateProps) => ({
+      customerName: state.menuOrder.customerName,
+      tableNumber: state.menuOrder.tableNumber,
+    }),
+    shallowEqual,
+  );
+
+  return (
+    <View style={styles.formCustomer}>
+      <InputField2
+        autoCorrect={false}
+        containerStyle={styles.customerField}
+        maxLength={20}
+        placeholder={t('Customer Name')}
+        size="small"
+        value={customerName}
+        left={
+          <IcUser color={colors.neutral.c600} height={s(20)} width={s(20)} />
+        }
+        onChangeText={val => dispatch(setCustomerName(val))}
+      />
+      <InputField2
+        containerStyle={styles.tableField}
+        keyboardType="number-pad"
+        maxLength={3}
+        size="small"
+        value={tableNumber}
+        left={
+          <IcTable color={colors.neutral.c600} height={s(20)} width={s(20)} />
+        }
+        onChangeText={val => dispatch(setTableNumber(val))}
+      />
+    </View>
+  );
+}
+
 function MenuCurrentOrder(): JSX.Element {
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
@@ -231,39 +272,9 @@ function MenuCurrentOrder(): JSX.Element {
           <Text color="neutral.c600" textStyle="bodyTextSmall">
             {dayjs().format('dddd, DD MMMM YYYY')}
           </Text>
-          <Spacer height={20} />
-          <View style={styles.formCustomer}>
-            <InputField2
-              autoCorrect={false}
-              containerStyle={styles.customerField}
-              maxLength={20}
-              placeholder={t('Customer Name')}
-              size="small"
-              left={
-                <IcUser
-                  color={colors.neutral.c600}
-                  height={s(20)}
-                  width={s(20)}
-                />
-              }
-              onChangeText={val => dispatch(setCustomerName(val))}
-            />
-            <InputField2
-              containerStyle={styles.tableField}
-              keyboardType="number-pad"
-              maxLength={3}
-              size="small"
-              left={
-                <IcTable
-                  color={colors.neutral.c600}
-                  height={s(20)}
-                  width={s(20)}
-                />
-              }
-              onChangeText={val => dispatch(setTableNumber(val))}
-            />
-          </View>
 
+          <Spacer height={20} />
+          <FormCustomer />
           <Spacer height={20} />
 
           <View style={globalStyles.rowBetween}>

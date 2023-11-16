@@ -38,7 +38,9 @@ function PaymentSuccessPopup(): JSX.Element {
           <Spacer height={32} />
           <Text textStyle="heading2">{t('Payment Success!')}</Text>
           <Spacer height={20} />
-          <Text textStyle="bodyTextLarge">Transaction No. 201023-0001</Text>
+          <Text textStyle="bodyTextLarge">
+            Transaction No. {data?.transactionID}
+          </Text>
           <Spacer height={12} />
           <Text textStyle="bodyTextMedium">{data?.date || '-'}</Text>
           <Spacer height={24} />
@@ -55,10 +57,11 @@ function PaymentSuccessPopup(): JSX.Element {
             </View>
             <View style={styles.detailsItemFrame}>
               <Text color="success.c400" textStyle="bodyTextLarge">
-                {t('Discount')} : Holiday Saving
+                {t('Discount')}{' '}
+                {data?.discount ? `: ${data?.discount.name}` : ''}
               </Text>
               <Text color="success.c400" textStyle="labelLarge">
-                -{currencyPrice(5000)}
+                {data?.discount ? data.discount.valueDisplay : '-'}
               </Text>
             </View>
             <View style={styles.detailsItemFrame}>
@@ -66,7 +69,7 @@ function PaymentSuccessPopup(): JSX.Element {
                 {t('Tax')}
               </Text>
               <Text color="neutral.c500" textStyle="labelLarge">
-                {currencyPrice(5000)}
+                {data?.tax ? currencyPrice(data.tax) : '-'}
               </Text>
             </View>
           </View>
