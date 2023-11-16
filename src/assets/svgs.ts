@@ -13,7 +13,9 @@ import IcCaretRight from '../../assets/svgs/IcCaretRight.svg';
 import IcCart from '../../assets/svgs/IcCart.svg';
 import IcCheckbox from '../../assets/svgs/IcCheckbox.svg';
 import IcCheckboxOutline from '../../assets/svgs/IcCheckboxOutline.svg';
+import IcDeleteLeft from '../../assets/svgs/IcDeleteLeft.svg';
 import IcEdit from '../../assets/svgs/IcEdit.svg';
+import IcEmpty from '../../assets/svgs/IcEmpty.svg';
 import IcExpense from '../../assets/svgs/IcExpense.svg';
 import IcExpenseActive from '../../assets/svgs/IcExpenseActive.svg';
 import IcEyeOpen from '../../assets/svgs/IcEyeOpen.svg';
@@ -35,6 +37,7 @@ import IcReceiptActive from '../../assets/svgs/IcReceiptActive.svg';
 import IcRefund from '../../assets/svgs/IcRefund.svg';
 import IcSignOut from '../../assets/svgs/IcSignOut.svg';
 import IcStock from '../../assets/svgs/IcStock.svg';
+import IcSuccess from '../../assets/svgs/IcSuccess.svg';
 import IcTable from '../../assets/svgs/IcTable.svg';
 import IcTrash from '../../assets/svgs/IcTrash.svg';
 import IcUser from '../../assets/svgs/IcUser.svg';
@@ -57,7 +60,9 @@ export {
   IcCart,
   IcCheckbox,
   IcCheckboxOutline,
+  IcDeleteLeft,
   IcEdit,
+  IcEmpty,
   IcExpense,
   IcExpenseActive,
   IcEyeOpen,
@@ -79,6 +84,7 @@ export {
   IcRefund,
   IcSignOut,
   IcStock,
+  IcSuccess,
   IcTable,
   IcTrash,
   IcUser,

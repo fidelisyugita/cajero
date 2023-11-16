@@ -21,6 +21,7 @@ import common from './commonStore';
 import menuChoose from './menuChooseStore';
 import menuOrder from './menuOrderStore';
 import menu from './menuStore';
+import orderDiscount from './orderDiscountStore';
 import refund from './refundStore';
 import session, {initialSessionState} from './sessionStore';
 
@@ -29,6 +30,7 @@ const reducers = combineReducers({
   menu,
   menuChoose,
   menuOrder,
+  orderDiscount,
   refund,
   session,
   [api.reducerPath]: api.reducer,

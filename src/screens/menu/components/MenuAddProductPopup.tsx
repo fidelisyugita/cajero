@@ -260,6 +260,7 @@ function PopupFooter(): JSX.Element {
       isEdit: !!state.menuChoose.product?.productOrderId,
     };
   }, shallowEqual);
+
   const addToOrderList = () => {
     const uid = new ShortUniqueId();
     const product = store.getState()?.menuChoose?.product;

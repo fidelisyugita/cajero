@@ -12,6 +12,7 @@ import {FlashList} from '@shopify/flash-list';
 
 import {IcArrowCircleRight, IcTable, IcUser} from '../../../assets/svgs';
 import Button from '../../../components/Button';
+import ConditionalRender from '../../../components/ConditionalRender';
 import DashedLine from '../../../components/DashedLine';
 import InputField2 from '../../../components/InputField.2';
 import OrderCard from '../../../components/OrderCard';
@@ -20,29 +21,38 @@ import Text from '../../../components/Text';
 import {RootStateProps} from '../../../store';
 import {
   setCustomerName,
+  setOrderDiscount,
   setRemoveAllOrderListPopup,
   setTableNumber,
 } from '../../../store/menuOrderStore';
+import {setOrderDiscountPopup} from '../../../store/orderDiscountStore';
 import {colors, globalStyles} from '../../../styles';
 import {currencyPrice} from '../../../utils/convert';
 import {s, vs} from '../../../utils/scale';
+import {
+  discountSelector,
+  subtotalSelector,
+  totalSelector,
+} from '../Menu.selector';
 
 type SummaryItemProps = {
   label: string;
   value: string;
 };
 
-const subtotalSelector = (state: RootStateProps) =>
-  state.menuOrder.orderList.reduce((acc, ol) => acc + ol.totalPrice, 0);
-
-const orderSelector = createSelector([subtotalSelector], state => ({
-  subtotal: state,
-}));
+const orderSelector = createSelector(
+  [subtotalSelector, discountSelector, totalSelector],
+  (subtotal, discount, total) => ({
+    discount,
+    subtotal,
+    total,
+  }),
+);
 
 function OrderSummary(): JSX.Element {
   const {t} = useTranslation();
 
-  const {subtotal} = useSelector(orderSelector);
+  const {discount, subtotal, total} = useSelector(orderSelector);
 
   return (
     <View style={styles.orderSummary}>
@@ -51,7 +61,10 @@ function OrderSummary(): JSX.Element {
           label={t('Subtotal')}
           value={subtotal ? currencyPrice(subtotal) : '-'}
         />
-        <SummaryItem label={t('Discount')} value="-" />
+        <SummaryItem
+          label={t('Discount')}
+          value={discount ? currencyPrice(discount) : '-'}
+        />
         <SummaryItem label={t('Tax')} value="-" />
       </View>
       <View style={styles.summarySeparator}>
@@ -63,7 +76,7 @@ function OrderSummary(): JSX.Element {
       <View style={globalStyles.rowBetween}>
         <Text textStyle="heading5">{t('Total')}</Text>
         <Text color="primary.c400" textStyle="heading5">
-          -
+          {total ? currencyPrice(total) : '-'}
         </Text>
       </View>
     </View>
@@ -85,23 +98,49 @@ function separator() {
 
 function ListFooterComponent(): JSX.Element {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
 
-  const disabled = useSelector(
-    (state: RootStateProps) => state.menuOrder.orderList.length < 1,
+  const {disabled, discount} = useSelector(
+    (state: RootStateProps) => ({
+      disabled: state.menuOrder.orderList.length < 1,
+      discount: state.menuOrder.discount,
+    }),
+    shallowEqual,
   );
 
   return (
     <>
       <Spacer height={20} />
-      <Text textStyle="labelMedium">{t('Add')}</Text>
+      <View style={globalStyles.rowBetween}>
+        <Text textStyle="labelMedium">{t('Discount')}</Text>
+        <Button
+          disabled={!discount}
+          size="small"
+          variant="link"
+          onPress={() => dispatch(setOrderDiscount(undefined))}>
+          {t('Remove')}
+        </Button>
+      </View>
       <Spacer height={12} />
+      <ConditionalRender condition={!!discount?.id}>
+        <View style={globalStyles.rowBetween}>
+          <Text color="success.c400" textStyle="bodyTextMedium">
+            {discount?.name}
+          </Text>
+          <Text color="success.c400" textStyle="labelMedium">
+            {discount?.valueDisplay}
+          </Text>
+        </View>
+        <Spacer height={12} />
+      </ConditionalRender>
       <View style={globalStyles.rowBetween}>
         <Button
           containerStyle={globalStyles.flex}
           disabled={disabled}
           size="small"
-          variant="secondary">
-          {t('Discount')}
+          variant="secondary"
+          onPress={() => dispatch(setOrderDiscountPopup(true))}>
+          {t(discount?.id ? 'Change Discount' : 'Add Discount')}
         </Button>
       </View>
 

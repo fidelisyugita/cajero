@@ -2,18 +2,24 @@ import equal from 'deep-equal';
 
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
-import {ProductOrderProps} from '../interfaces/CommonInterface';
+import {DiscountProps, ProductOrderProps} from '../interfaces/CommonInterface';
 
 export type MenuOrderStateProps = {
   orderList: ProductOrderProps[] | [];
   removeAllOrderListPopup: boolean;
   customerName: string;
   tableNumber: string;
+  paymentMethod: string;
+  paymentSuccessPopup: boolean;
+  discount: DiscountProps | undefined;
 };
 
 export const initialMenuOrderState: MenuOrderStateProps = {
   customerName: '',
+  discount: undefined,
   orderList: [],
+  paymentMethod: '',
+  paymentSuccessPopup: false,
   removeAllOrderListPopup: false,
   tableNumber: '',
 };
@@ -29,13 +35,15 @@ const slice = createSlice({
       const {orderList} = state;
       const existingProductIndex = orderList.findIndex(ol => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {productOrderId, qty, ...compareA} = ol;
+        const {productOrderId, qty, totalPrice, ...compareA} = ol;
 
         const {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           productOrderId: productOrderIdB,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           qty: qtyB,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          totalPrice: totalPriceB,
           ...compareB
         } = action.payload;
         return ol.id === action.payload.id && equal(compareA, compareB);
@@ -44,6 +52,9 @@ const slice = createSlice({
       if (existingProductIndex > -1) {
         orderList[existingProductIndex].qty =
           orderList[existingProductIndex].qty + action.payload.qty;
+        orderList[existingProductIndex].totalPrice =
+          orderList[existingProductIndex].totalPrice +
+          action.payload.totalPrice;
       } else {
         orderList.push(action.payload);
       }
@@ -68,8 +79,21 @@ const slice = createSlice({
         todo => todo.productOrderId !== action.payload,
       );
     },
+    resetOrderState: () => initialMenuOrderState,
     setCustomerName: (state, action: PayloadAction<string>) => {
       state.customerName = action.payload;
+    },
+    setOrderDiscount: (
+      state,
+      action: PayloadAction<DiscountProps | undefined>,
+    ) => {
+      state.discount = action.payload;
+    },
+    setPaymentMethod: (state, action: PayloadAction<string>) => {
+      state.paymentMethod = action.payload;
+    },
+    setPaymentSuccessPopup: (state, action: PayloadAction<boolean>) => {
+      state.paymentSuccessPopup = action.payload;
     },
     setRemoveAllOrderListPopup: (state, action: PayloadAction<boolean>) => {
       state.removeAllOrderListPopup = action.payload;
@@ -85,7 +109,11 @@ export const {
   editProductInOrderList,
   removeAllProductFromOrderList,
   removeProductFromOrderList,
+  resetOrderState,
   setCustomerName,
+  setOrderDiscount,
+  setPaymentMethod,
+  setPaymentSuccessPopup,
   setRemoveAllOrderListPopup,
   setTableNumber,
 } = slice.actions;

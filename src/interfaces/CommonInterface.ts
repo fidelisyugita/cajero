@@ -1,14 +1,22 @@
+export type DiscountProps = {
+  id: string;
+  value: string;
+  valueDisplay: string;
+  name: string;
+  type: string;
+};
+
+type DiscountProductProps = {
+  type: 'percent' | 'amount';
+  value: string;
+};
+
 export type ProductOrderProps = ProductProps & {
-  discount: DiscountProps;
+  discount: DiscountProductProps;
   qty: number;
   note: string;
   productOrderId: string;
   totalPrice: number;
-};
-
-type DiscountProps = {
-  type: 'percent' | 'amount';
-  value: string;
 };
 
 export interface ProductProps {

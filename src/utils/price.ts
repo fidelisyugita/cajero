@@ -29,3 +29,25 @@ export function getFinalPriceItem(item: ProductOrderProps) {
 
   return totalPrice;
 }
+
+export function suggestAmounts(payment: number) {
+  // Set of predefined denominations
+  const denominations = [100000, 50000, 20000, 10000, 5000, 2000, 1000];
+
+  // Sort the denominations in descending order
+  denominations.sort((a, b) => b - a);
+
+  // Calculate suggested amounts
+  const suggestions = [];
+  let remainingAmount = payment;
+
+  for (const denomination of denominations) {
+    const count = Math.floor(remainingAmount / denomination);
+    if (count > 0) {
+      suggestions.push({amount: denomination, count});
+      remainingAmount %= denomination;
+    }
+  }
+
+  return suggestions;
+}
