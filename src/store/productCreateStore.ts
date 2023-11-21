@@ -9,6 +9,7 @@ type ProductCreateStateProps = {
 };
 
 export const initialProductCreateState: ProductCreateStateProps = {
+  image: undefined,
   popupVisible: false,
 };
 

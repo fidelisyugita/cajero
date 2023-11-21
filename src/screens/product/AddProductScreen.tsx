@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {TouchableRipple} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {IcArrowDown, IcArrowUp, IcInfo} from '../../assets/svgs';
+import {IcArrowDown, IcArrowUp, IcInfo, IcUpload} from '../../assets/svgs';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown.2';
 import InputField2 from '../../components/InputField.2';
+import Spacer from '../../components/Spacer';
 import Text from '../../components/Text';
 import Toggle from '../../components/Toggle';
-import {setProductCreatePopup} from '../../store/productCreateStore';
+import {cleanTmp} from '../../helpers/imagePickerHelper';
+import {RootStateProps} from '../../store';
+import {
+  resetProductCreate,
+  setProductCreatePopup,
+} from '../../store/productCreateStore';
 import {colors, globalStyles} from '../../styles';
 import {s, vs} from '../../utils/scale';
 import ProductImage from './components/AddProductImage';
@@ -26,10 +31,21 @@ function AddProductScreen(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
+  const image = useSelector(
+    (state: RootStateProps) => state.productCreate.image,
+  );
+
   const iconArrow = (visible: boolean | undefined) => {
     const Icon = visible ? IcArrowUp : IcArrowDown;
     return <Icon color={colors.neutral.c600} height={s(20)} width={s(20)} />;
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetProductCreate());
+      cleanTmp();
+    };
+  }, []);
 
   return (
     <View style={globalStyles.screen}>
@@ -39,17 +55,31 @@ function AddProductScreen(): JSX.Element {
           <Box>
             <Box.Header required title={t('Product Picture')} />
             <Box.Body style={globalStyles.alignCenter}>
-              <TouchableRipple
-                onPress={() => dispatch(setProductCreatePopup(true))}>
-                <ProductImage>
-                  <Text
-                    color="neutral.c600"
-                    style={globalStyles.textCenter}
-                    textStyle="labelMedium">
-                    {t('Upload image\nor Select from Color Options')}
-                  </Text>
-                </ProductImage>
-              </TouchableRipple>
+              <ProductImage image={image} />
+              <Spacer height={16} />
+              <View
+                style={[
+                  globalStyles.rowBetween,
+                  globalStyles.selfStretch,
+                  styles.uploadFrame,
+                ]}>
+                <Text color="neutral.c600" textStyle="labelMedium">
+                  {t('Upload image\nor Select from Color Options')}
+                </Text>
+                <Button
+                  size="medium"
+                  variant="soft"
+                  left={
+                    <IcUpload
+                      color={colors.primary.c400}
+                      height={s(20)}
+                      width={s(20)}
+                    />
+                  }
+                  onPress={() => dispatch(setProductCreatePopup(true))}>
+                  {t('Upload')}
+                </Button>
+              </View>
             </Box.Body>
           </Box>
 
@@ -171,17 +201,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: s(32),
   },
-  imagePlaceholderFrame: {
-    alignItems: 'center',
-    backgroundColor: colors.neutral.c300,
-    borderColor: colors.neutral.c400,
-    borderRadius: s(4),
-    borderWidth: 1,
-    gap: s(3),
-    height: s(220),
-    justifyContent: 'center',
-    width: vs(403),
-  },
   productInformationFrame: {
     gap: s(20),
   },
@@ -194,6 +213,9 @@ const styles = StyleSheet.create({
   stockFrame: {
     flexDirection: 'row',
     gap: vs(12),
+  },
+  uploadFrame: {
+    paddingHorizontal: vs(11.5),
   },
   variantFrame: {
     gap: s(20),

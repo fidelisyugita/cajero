@@ -1,5 +1,11 @@
 import ImagePicker, {Image} from 'react-native-image-crop-picker';
 
+export function cleanTmp() {
+  ImagePicker.clean()
+    .then(() => {})
+    .catch((error: any) => {});
+}
+
 export function openPicker(actions: Function) {
   ImagePicker.openPicker({
     cropping: true,
@@ -12,7 +18,7 @@ export function openPicker(actions: Function) {
   })
     .then((result: Image) => {
       if (result.data) {
-        const base64 = `data:${result.mime};base64, ${result.data}`;
+        const base64 = `data:${result.mime};base64,${result.data}`;
         actions(base64);
       }
     })

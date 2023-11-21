@@ -72,6 +72,9 @@ export default StyleSheet.create({
   selfStart: {
     alignSelf: 'flex-start',
   },
+  selfStretch: {
+    alignSelf: 'stretch',
+  },
   shadowMedium: {
     elevation: 5,
     shadowColor: 'rgba(0, 0, 0, 0.10)',

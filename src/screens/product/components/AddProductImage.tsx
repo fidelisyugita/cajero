@@ -1,18 +1,22 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, memo} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useSelector} from 'react-redux';
 
 import {IcPicture} from '../../../assets/svgs';
+import ConditionalRender from '../../../components/ConditionalRender';
 import Image from '../../../components/Image';
-import {RootStateProps} from '../../../store';
 import {colors} from '../../../styles';
 import {s, vs} from '../../../utils/scale';
 
-function AddProductImage({children}: {children?: ReactNode}): JSX.Element {
-  const image = useSelector(
-    (state: RootStateProps) => state.productCreate.image,
-  );
-
+function AddProductImage({
+  children,
+  image,
+}: {
+  children?: ReactNode;
+  image?: {
+    type: 'color' | 'image';
+    value: string;
+  };
+}): JSX.Element {
   if (image?.type === 'image') {
     return (
       <Image
@@ -32,7 +36,9 @@ function AddProductImage({children}: {children?: ReactNode}): JSX.Element {
         styles.container,
         {backgroundColor: image?.value ? image.value : colors.neutral.c300},
       ]}>
-      <IcPicture height={s(80)} width={s(80)} />
+      <ConditionalRender condition={!image?.value}>
+        <IcPicture height={s(80)} width={s(80)} />
+      </ConditionalRender>
       {children}
     </View>
   );
@@ -57,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProductImage;
+export default memo(AddProductImage);

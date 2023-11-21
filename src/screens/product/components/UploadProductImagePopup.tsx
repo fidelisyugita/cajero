@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 
 import {IcUpload} from '../../../assets/svgs';
 import Button from '../../../components/Button';
@@ -27,21 +27,42 @@ const colorOptions = [
   colors.pressed.c3,
 ];
 
+type ImageStateProps = {
+  type: 'color' | 'image';
+  value: string;
+};
+
 function UploadProductImagePopup(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const visible = useSelector(
-    (state: RootStateProps) => state.productCreate.popupVisible,
+  const {image, visible} = useSelector(
+    (state: RootStateProps) => ({
+      image: state.productCreate.image,
+      visible: state.productCreate.popupVisible,
+    }),
+    shallowEqual,
   );
 
+  const [tempImage, setTempImage] = useState<ImageStateProps | undefined>(
+    undefined,
+  );
+
+  useEffect(() => {
+    if (visible) {
+      setTempImage(image);
+    } else {
+      setTempImage(undefined);
+    }
+  }, [visible]);
+
   return (
-    <Popup height={566} visible={visible} width={451}>
+    <Popup height={666} visible={visible} width={451}>
       <Popup.Header
         title={t('Product Picture')}
         onClose={() => dispatch(setProductCreatePopup(false))}
       />
       <Popup.Body style={styles.body}>
-        <ProductImage />
+        <ProductImage image={tempImage} />
 
         <View style={styles.item}>
           <Text color="neutral.c600" textStyle="labelLarge">
@@ -60,7 +81,7 @@ function UploadProductImagePopup(): JSX.Element {
             }
             onPress={() => {
               openPicker((value: string) =>
-                dispatch(setProductImage({type: 'image', value})),
+                setTempImage({type: 'image', value}),
               );
             }}>
             {t('Choose File')}
@@ -79,9 +100,7 @@ function UploadProductImagePopup(): JSX.Element {
             renderItem={({item}) => {
               return (
                 <TouchableRipple
-                  onPress={() =>
-                    dispatch(setProductImage({type: 'color', value: item}))
-                  }>
+                  onPress={() => setTempImage({type: 'color', value: item})}>
                   <View style={[styles.boxColor, {backgroundColor: item}]} />
                 </TouchableRipple>
               );
@@ -89,6 +108,26 @@ function UploadProductImagePopup(): JSX.Element {
           />
         </View>
       </Popup.Body>
+
+      <Popup.Footer style={styles.footer}>
+        <Button
+          containerStyle={globalStyles.flex}
+          size="medium"
+          variant="secondary"
+          onPress={() => dispatch(setProductCreatePopup(false))}>
+          {t('Cancel')}
+        </Button>
+        <Button
+          containerStyle={globalStyles.flex}
+          size="medium"
+          variant="primary"
+          onPress={() => {
+            dispatch(setProductImage(tempImage));
+            dispatch(setProductCreatePopup(false));
+          }}>
+          {t('Save')}
+        </Button>
+      </Popup.Footer>
     </Popup>
   );
 }
@@ -108,6 +147,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+  footer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: vs(16),
+    justifyContent: 'space-between',
+  },
   item: {
     gap: s(12),
   },
