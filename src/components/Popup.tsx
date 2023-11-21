@@ -30,6 +30,7 @@ type HeaderProps = {
 
 type BodyProps = {
   children: ViewProps['children'];
+  style?: ViewStyle;
 };
 type FooterProps = {
   children: ViewProps['children'];
@@ -52,8 +53,8 @@ function Header({onClose, title}: HeaderProps): JSX.Element {
   );
 }
 
-function Body({children}: BodyProps): JSX.Element {
-  return <View style={styles.body}>{children}</View>;
+function Body({children, style}: BodyProps): JSX.Element {
+  return <View style={[styles.body, style]}>{children}</View>;
 }
 
 function Footer({children, style}: FooterProps): JSX.Element {

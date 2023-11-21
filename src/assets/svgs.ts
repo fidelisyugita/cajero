@@ -24,10 +24,12 @@ import IcFilter from '../../assets/svgs/IcFilter.svg';
 import IcGear from '../../assets/svgs/IcGear.svg';
 import IcGearActive from '../../assets/svgs/IcGearActive.svg';
 import IcGoogle from '../../assets/svgs/IcGoogle.svg';
+import IcInfo from '../../assets/svgs/IcInfo.svg';
 import IcMagnify from '../../assets/svgs/IcMagnify.svg';
 import IcMenu from '../../assets/svgs/IcMenu.svg';
 import IcMenuActive from '../../assets/svgs/IcMenuActive.svg';
 import IcMinus from '../../assets/svgs/IcMinus.svg';
+import IcPicture from '../../assets/svgs/IcPicture.svg';
 import IcPlus from '../../assets/svgs/IcPlus.svg';
 import IcPrint from '../../assets/svgs/IcPrint.svg';
 import IcRadio from '../../assets/svgs/IcRadio.svg';
@@ -40,6 +42,7 @@ import IcStock from '../../assets/svgs/IcStock.svg';
 import IcSuccess from '../../assets/svgs/IcSuccess.svg';
 import IcTable from '../../assets/svgs/IcTable.svg';
 import IcTrash from '../../assets/svgs/IcTrash.svg';
+import IcUpload from '../../assets/svgs/IcUpload.svg';
 import IcUser from '../../assets/svgs/IcUser.svg';
 import IcX from '../../assets/svgs/IcX.svg';
 import Logo from '../../assets/svgs/Logo.svg';
@@ -71,10 +74,12 @@ export {
   IcGear,
   IcGearActive,
   IcGoogle,
+  IcInfo,
   IcMagnify,
   IcMenu,
   IcMenuActive,
   IcMinus,
+  IcPicture,
   IcPlus,
   IcPrint,
   IcRadio,
@@ -87,6 +92,7 @@ export {
   IcSuccess,
   IcTable,
   IcTrash,
+  IcUpload,
   IcUser,
   IcX,
   Logo,

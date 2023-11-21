@@ -24,6 +24,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to the photo library is integral to Cajero, facilitating seamless product image uploads and management for a visually enhanced inventory. This access is solely utilized within the app to empower efficient cataloging and visual representation of items for a streamlined Point of Sale experience</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera access within Cajero enables functionalities crucial for efficient operations, such as quick barcode scanning, product image capture for cataloging, and facilitating in-app visual data management. We prioritize your privacy and assure you that camera access is solely used to optimize your Point of Sale interactions and inventory management.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access in Cajero is utilized for enabling seamless audio functionalities, such as voice commands for search or transaction purposes. This access is solely employed within the app to provide an enhanced and efficient Point of Sale experience. We prioritize your privacy and ensure that microphone access is dedicated to optimizing your interaction with the application.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

@@ -1,9 +1,6 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {TouchableRipple} from 'react-native-paper';
 
-import {IcCaretDown} from '../assets/svgs';
-import {colors, globalStyles} from '../styles';
 import {s, vs} from '../utils/scale';
 import Image from './Image';
 import Spacer from './Spacer';
@@ -33,14 +30,6 @@ function SideTabHeader({left}: SideTabHeaderProps): JSX.Element {
             Owner
           </Text>
         </View>
-
-        <TouchableRipple style={globalStyles.selfEnd} onPress={() => {}}>
-          <IcCaretDown
-            color={colors.neutral.c600}
-            height={s(20)}
-            width={s(20)}
-          />
-        </TouchableRipple>
       </View>
     </View>
   );

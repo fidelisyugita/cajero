@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {globalStyles} from '../../styles';
 import {s} from '../../utils/scale';
@@ -10,9 +10,13 @@ import PaymentSuccessPopup from './components/PaymentSuccessPopup';
 function OrderTransactionScreen(): JSX.Element {
   return (
     <View style={styles.container}>
-      <OrderTransactionPaymentMethod />
-      <OrderTransactionCalculator />
-      <PaymentSuccessPopup />
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}>
+        <OrderTransactionPaymentMethod />
+        <OrderTransactionCalculator />
+        <PaymentSuccessPopup />
+      </ScrollView>
     </View>
   );
 }
@@ -20,9 +24,10 @@ function OrderTransactionScreen(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.screen,
-    padding: s(24),
+  },
+  content: {
     ...globalStyles.rowBetween,
-    alignItems: 'stretch',
+    padding: s(24),
   },
 });
 export default OrderTransactionScreen;

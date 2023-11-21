@@ -12,6 +12,8 @@ import SignUpScreen from '../screens/auth/SignUpScreen';
 import OrderTransactionScreen from '../screens/menu/OrderTransactionScreen';
 import AddProductScreen from '../screens/product/AddProductScreen';
 import EditProductScreen from '../screens/product/EditProductScreen';
+import AddProductHeaderRight from '../screens/product/components/AddProductHeaderRight';
+import EditProductHeaderRight from '../screens/product/components/EditProductHeaderRight';
 import ReceiptDetailsScreen from '../screens/receipt/ReceiptDetailsScreen';
 import {RootStateProps} from '../store';
 import SideNavigator from './SideNavigator';
@@ -80,7 +82,9 @@ function StackNavigator(): JSX.Element {
             name="AddProductScreen"
             options={{
               freezeOnBlur: true,
-              header: props => <Header {...props} />,
+              header: props => (
+                <Header {...props} headerRight={<AddProductHeaderRight />} />
+              ),
               headerTitle: t('Add New Product'),
             }}
           />
@@ -89,7 +93,9 @@ function StackNavigator(): JSX.Element {
             name="EditProductScreen"
             options={{
               freezeOnBlur: true,
-              header: props => <Header {...props} />,
+              header: props => (
+                <Header {...props} headerRight={<EditProductHeaderRight />} />
+              ),
               headerTitle: t('Edit Product & Category'),
             }}
           />

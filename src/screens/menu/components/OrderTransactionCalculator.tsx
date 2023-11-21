@@ -115,14 +115,15 @@ function OrderTransactionCalculator(): JSX.Element {
 const styles = StyleSheet.create({
   calculatorFrame: {
     gap: s(24),
+    paddingBottom: s(24),
     paddingHorizontal: vs(24),
   },
   cashContent: {
     paddingHorizontal: vs(24),
   },
   cashSuggestionsFrame: {
-    height: s(100),
     justifyContent: 'center',
+    paddingVertical: s(20),
   },
   chargeFrame: {
     backgroundColor: colors.supporting.red,

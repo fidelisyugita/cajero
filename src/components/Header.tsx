@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {Surface} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -12,9 +12,11 @@ import ButtonIcon from './ButtonIcon';
 import ConditionalRender from './ConditionalRender';
 import Text from './Text';
 
-interface HeaderProps extends NativeStackHeaderProps {}
+interface HeaderProps extends NativeStackHeaderProps {
+  headerRight?: ReactNode;
+}
 
-function Header({navigation, options}: HeaderProps): JSX.Element {
+function Header({headerRight, navigation, options}: HeaderProps): JSX.Element {
   const insets = useSafeAreaInsets();
   const insetsTop =
     Platform.OS === 'android' ? StatusBar.currentHeight || 0 : insets.top;
@@ -48,6 +50,9 @@ function Header({navigation, options}: HeaderProps): JSX.Element {
             ''}
         </Text>
       </View>
+      <ConditionalRender condition={!!headerRight}>
+        {headerRight}
+      </ConditionalRender>
     </Surface>
   );
 }

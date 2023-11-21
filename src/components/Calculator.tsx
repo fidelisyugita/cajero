@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, memo, useState} from 'react';
+import React, {Dispatch, memo} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {TouchableRipple} from 'react-native-paper';
 
