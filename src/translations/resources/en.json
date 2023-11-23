@@ -103,7 +103,13 @@
   "Kick Things Off with Your First Discount.": "Kick Things Off with Your First Discount.",
   "Discounts are the Spice of Sales!": "Discounts are the Spice of Sales!",
   "Are you sure you want to delete this Discount?": "Are you sure you want to delete this Discount ({{name}})?",
+  "Are you sure you want to delete this Category?": "Are you sure you want to delete this Category ({{name}})?",
   "Upload image\nor Select from Color Options": "Upload image\nor Select from Color Options",
   "Does this menu require stock management?": "Does this menu require stock management?",
-  "When enabled, stock management is required before adding the menu item to orders. If the stock reaches 0, the menu item cannot be ordered.": "When enabled, stock management is required before adding the menu item to orders. If the stock reaches 0, the menu item cannot be ordered."
+  "When enabled, stock management is required before adding the menu item to orders. If the stock reaches 0, the menu item cannot be ordered.": "When enabled, stock management is required before adding the menu item to orders. If the stock reaches 0, the menu item cannot be ordered.",
+  "Ready to Sort?": "Ready to Sort?",
+  "Category Name": "Category Name",
+  "Create New Category": "Create New Category",
+  "Begin by Creating Your First Category for a Neat Experience.": "Begin by Creating Your First Category for a Neat Experience.",
+  "List of Category Options": "List of Category Options"
 }

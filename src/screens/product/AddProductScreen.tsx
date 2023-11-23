@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
+// import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 
+// import {yupResolver} from '@hookform/resolvers/yup';
 import {IcArrowDown, IcArrowUp, IcInfo, IcUpload} from '../../assets/svgs';
 import Box from '../../components/Box';
 import Button from '../../components/Button';
+import ConditionalRender from '../../components/ConditionalRender';
 import Dropdown from '../../components/Dropdown.2';
 import InputField2 from '../../components/InputField.2';
 import Spacer from '../../components/Spacer';
@@ -15,11 +18,15 @@ import {cleanTmp} from '../../helpers/imagePickerHelper';
 import {RootStateProps} from '../../store';
 import {
   resetProductCreate,
+  setAssignCategoryPopupVisible,
   setProductCreatePopup,
 } from '../../store/productCreateStore';
 import {colors, globalStyles} from '../../styles';
 import {s, vs} from '../../utils/scale';
+// import schema from './AddProductScreen.schema';
 import ProductImage from './components/AddProductImage';
+import AssignCategoryPopup from './components/AssignCategoryPopup';
+import DeleteCategoryPopup from './components/DeleteCategoryPopup';
 import UploadProductImagePopup from './components/UploadProductImagePopup';
 
 const commisionType = [
@@ -27,13 +34,48 @@ const commisionType = [
   {label: 'Amount', value: 'amount'},
 ];
 
+type FormAddProduct = {
+  image?: {
+    value: string;
+    type: 'color' | 'image';
+  };
+  productName: string;
+  productCode?: string;
+  category?: string;
+  commission?: string;
+  commissionType?: string;
+  price: string;
+  tax?: string;
+  variant?: any;
+};
+
 function AddProductScreen(): JSX.Element {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const image = useSelector(
-    (state: RootStateProps) => state.productCreate.image,
+  const {category, image} = useSelector(
+    (state: RootStateProps) => ({
+      category: state.productCreate.category,
+      image: state.productCreate.image,
+    }),
+    shallowEqual,
   );
+
+  // const {control, handleSubmit, setFocus} = useForm<FormAddProduct>({
+  //   defaultValues: {
+  //     category: '',
+  //     commission: '',
+  //     commissionType: 'percent',
+  //     image: undefined,
+  //     price: '',
+  //     productCode: undefined,
+  //     productName: '',
+  //     tax: '',
+  //     variant: undefined,
+  //   },
+  //   reValidateMode: 'onChange',
+  //   resolver: yupResolver(schema),
+  // });
 
   const iconArrow = (visible: boolean | undefined) => {
     const Icon = visible ? IcArrowUp : IcArrowDown;
@@ -50,6 +92,8 @@ function AddProductScreen(): JSX.Element {
   return (
     <View style={globalStyles.screen}>
       <UploadProductImagePopup />
+      <AssignCategoryPopup />
+      <DeleteCategoryPopup />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.column}>
           <Box>
@@ -86,8 +130,17 @@ function AddProductScreen(): JSX.Element {
           <Box>
             <Box.Header title={t('Category')} />
             <Box.Body>
-              <Button size="large" variant="soft">
-                {t('Assign Category')}
+              <ConditionalRender condition={!!category?.id}>
+                <Text color="primary.c400" textStyle="bodyTextXLarge">
+                  {category?.name}
+                </Text>
+                <Spacer height={20} />
+              </ConditionalRender>
+              <Button
+                size="large"
+                variant="soft"
+                onPress={() => dispatch(setAssignCategoryPopupVisible(true))}>
+                {t(category?.id ? 'Change Category' : 'Assign Category')}
               </Button>
             </Box.Body>
           </Box>
@@ -145,7 +198,7 @@ function AddProductScreen(): JSX.Element {
                   placeholder="Percent"
                   renderRightIcon={iconArrow}
                   size="large"
-                  width={vs(161)}
+                  width={vs(158)}
                   onChange={() => {}}
                 />
               </View>
@@ -184,7 +237,7 @@ function AddProductScreen(): JSX.Element {
 const styles = StyleSheet.create({
   column: {
     gap: s(32),
-    width: vs(474),
+    width: vs(473),
   },
   commisionFormFrame: {
     alignItems: 'center',

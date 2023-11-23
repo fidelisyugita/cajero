@@ -1,13 +1,13 @@
 import * as yup from 'yup';
 
-export const schema = yup.object({
+export default yup.object({
   category: yup.string().label('Category'),
   commission: yup.string().label('Commission'),
   commissionType: yup.string().label('Commission Type'),
   image: yup
     .object()
     .shape({
-      type: yup.string().required(),
+      type: yup.string().oneOf(['color', 'image']).required(),
       value: yup.string().required(),
     })
     .label('Product Picture')
